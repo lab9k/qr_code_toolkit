@@ -1,0 +1,11 @@
+{% load qr_code %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Qr Code - {{ device.name }}</title>
+</head>
+<body>
+{% qr_from_text qr_data %}
+</body>
+</html>
