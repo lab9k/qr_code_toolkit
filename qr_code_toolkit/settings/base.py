@@ -146,3 +146,7 @@ LOCATION_FIELD = {
         ),
     },
 }
+
+import django_heroku
+
+django_heroku.settings(locals())
