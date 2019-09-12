@@ -15,13 +15,40 @@
 </head>
 <body>
 <!-- Display edit form when user is logged in -->
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Submit">
-</form>
-<input type="button" value="set current location" id="update_location">
-<!-- Display edit form when user is logged in -->
+{% if user.is_authenticated %}
+    <form method="post" id="edit_form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" name="update_device" value="Edit device info">
+        <br>
+        {% if is_worked_on %}
+            <input type="submit" name="end_work" value="End Maintenance">
+        {% else %}
+            <label for="job_desc">Job Description:</label><input id="job_desc" type="text" name="job_desc">
+            <input type="submit" name="start_work" value="Start Maintenance">
+        {% endif %}
+    </form>
+    <input type="button" value="set current location" id="update_location">
+{% else %}
+    <div>{{ device.location }}</div>
+    <div>{{ device.name }}</div>
+    <div>{{ device.city }}</div>
+    <p>Hier zou data over de processing e.d. moeten komen. Link naar stad.gent?</p>
+    <p>
+        <button>Report issue</button>
+    </p>
+{% endif %}
+
+<!-- Display information when user is not logged in -->
+
+<!--
+# User logged in
+    * can update location
+    * can check in - out (with picture)
+# User not logged in
+    * can report defects
+    * can see information about the device (link to stad.gent?)
+-->
 <p>
     <a href="{% url 'device_qr' id=device.id %}">Go to QR-code</a>
 </p>
@@ -30,17 +57,27 @@
   (() => {
     const updateLocBtn = document.getElementById("update_location");
     const locationField = document.getElementById("id_location");
-    updateLocBtn.addEventListener("click", () => {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const {coords: {latitude, longitude}} = position;
-          locationField.value = `${latitude},${longitude}`;
-          locationField.dispatchEvent(new Event('keyup'));
-        },
-        (error) => console.error(error),
-        {enableHighAccuracy: true});
+    if (updateLocBtn) {
+      updateLocBtn.addEventListener("click", () => {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const {coords: {latitude, longitude}} = position;
+            locationField.value = `${latitude},${longitude}`;
+            locationField.dispatchEvent(new Event('keyup'));
+          },
+          (error) => console.error(error),
+          {enableHighAccuracy: true});
+      });
+    }
+  })();
+  (() => {
+    const form = document.getElementById('edit_form');
+    form.addEventListener('submit', (ev) => {
     })
   })();
+</script>
+
+<script>
 
 </script>
 </html>

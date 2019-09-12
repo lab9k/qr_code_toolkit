@@ -1,6 +1,6 @@
 from django.views.generic import ListView, TemplateView
 from django.views.generic.edit import FormView
-from iotqrcode.models import Device
+from iotqrcode.models import Device, Work
 from iotqrcode.forms import DeviceForm
 
 
@@ -23,15 +23,26 @@ class DeviceView(FormView):
 
     def get_context_data(self, **kwargs):
         context = super(DeviceView, self).get_context_data(**kwargs)
-        context['device'] = Device.objects.get(pk=self.kwargs.get('id'))
+        device = Device.objects.get(pk=self.kwargs.get('id'))
+        context['device'] = device
+        context['is_worked_on'] = Work.objects.filter(device_id__exact=device.pk).latest('start').end is None
         return context
 
     def form_valid(self, form):
         device = Device.objects.get(pk=self.kwargs.get('id'))
-        device.location = form.cleaned_data.get("location")
-        device.name = form.cleaned_data.get("name")
-        device.city = form.cleaned_data.get("city")
-        device.save()
+        print(form.cleaned_data)
+        if 'update_device' in self.request.POST:
+            device.location = form.cleaned_data.get("location")
+            device.name = form.cleaned_data.get("name")
+            device.city = form.cleaned_data.get("city")
+            device.save()
+        if 'start_work' in self.request.POST:
+            job = Work(description=form.cleaned_data.get('job_desc'), device=device)
+            job.save()
+        if 'end_work' in self.request.POST:
+            job = Work.objects.filter(device_id__exact=device.pk).latest('start')
+            job.set_end()
+            job.save()
         return self.render_to_response(self.get_context_data(form=form))
 
 
