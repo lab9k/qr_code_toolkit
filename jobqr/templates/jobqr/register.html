@@ -6,6 +6,15 @@
 {% endblock %}
 {% block content %}
     <div class="container">
+        {% if success %}
+            <div class="alert alert-success" role="alert">
+                {{ message }}
+            </div>
+        {% elif success == False %}
+            <div class="alert alert-danger" role="alert">
+                {{ message }}
+            </div>
+        {% endif %}
         <div class="row">
             <h2>Register new Items</h2>
         </div>

@@ -76,9 +76,9 @@ class RegisterView(TemplateView):
             item_id = int(item_url[-3:].replace('/', ''))
             found_item = TrackedItem.objects.filter(item_id=item_id)
             if found_item.count() > 0:
-                return self.render_to_response(context={'message': 'That url is already registered'})
+                return self.render_to_response(context={'message': 'That url is already registered', 'success': False})
             else:
                 new_item = TrackedItem.objects.create(name=item_name, item_id=item_id)
                 new_item.save()
-                return self.render_to_response(context={'message': 'Item added successfully'})
-        return self.render_to_response(context={'message': 'Form invalid'})
+                return self.render_to_response(context={'message': 'Item added successfully', 'success': True})
+        return self.render_to_response(context={'message': 'Form invalid', 'success': False})
