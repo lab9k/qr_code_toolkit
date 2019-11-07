@@ -1,6 +1,5 @@
 from rest_framework import status
-from rest_framework.viewsets import ModelViewSet, ViewSet
-from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
 from jobqr.models import TrackedItem, Job
 from jobqr.serializers import TrackedItemSerializer, JobSerializer
 from django.http import JsonResponse
@@ -19,7 +18,7 @@ class JobViewSet(ModelViewSet):
 
 @require_http_methods(['POST'])
 def untrack(request, pk, item_pk):
-    item = TrackedItem.objects.get(pk=item_pk)
+    item = TrackedItem.objects.get(item_id=item_pk)
     job = Job.objects.get(pk=pk)
     if item is not None:
         if item.job.pk == pk:

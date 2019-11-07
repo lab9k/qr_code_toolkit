@@ -1,9 +1,8 @@
-import json
-from django.views.generic import DetailView, ListView, View
-from django.http import JsonResponse
 from django.forms.models import model_to_dict
+from django.http import JsonResponse
+from django.views.generic import DetailView, ListView, View, RedirectView, TemplateView
 
-from jobqr.forms import QrForm
+from jobqr.forms import QrForm, RegisterForm
 from jobqr.models import Job, TrackedItem
 
 
@@ -31,7 +30,7 @@ class JobView(View):
             else:
                 item_id = url[:-1]
 
-            obj, created = TrackedItem.objects.get_or_create(pk=item_id)
+            obj, created = TrackedItem.objects.get_or_create(item_id=item_id)
 
             obj.job = job
             obj.is_in_use = True
@@ -57,3 +56,29 @@ class JobDetailView(DetailView):
         context['qr_url'] = full_url
 
         return context
+
+
+class HomeView(RedirectView):
+    pattern_name = 'job_list'
+    query_string = True
+    permanent = True
+
+
+class RegisterView(TemplateView):
+    http_method_names = ['get', 'post']
+    template_name = 'jobqr/register.html'
+
+    def post(self, request):
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            item_name = form.cleaned_data['item_name']
+            item_url = form.cleaned_data['item_url']
+            item_id = int(item_url[-3:].replace('/', ''))
+            found_item = TrackedItem.objects.filter(item_id=item_id)
+            if found_item.count() > 0:
+                return self.render_to_response(context={'message': 'That url is already registered'})
+            else:
+                new_item = TrackedItem.objects.create(name=item_name, item_id=item_id)
+                new_item.save()
+                return self.render_to_response(context={'message': 'Item added successfully'})
+        return self.render_to_response(context={'message': 'Form invalid'})

@@ -1,0 +1,60 @@
+{% extends 'jobqr/layout.html' %}
+{% load static %}
+{% block head %}
+    <title>Register new Item</title>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.2.0/dist/jsQR.min.js"></script>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <h2>Register new Items</h2>
+        </div>
+        <div class="row">
+            <div id="output" hidden>
+                <div id="outputMessage">No QR code detected.</div>
+            </div>
+        </div>
+        <div class="row">
+            <div id="video_section" hidden>
+                <div id="loadingMessage">🎥 Unable to access video stream (please make sure you have a webcam enabled)
+                </div>
+                <canvas id="canvas" hidden></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="itemModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="itemModalLabel">Add Item</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="inputItemUrl">Item Url</label>
+                            <input type="text" class="form-control" id="inputItemUrl"
+                                   name="item_url" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputItemName">Item Name</label>
+                            <input type="text" class="form-control" id="inputItemName"
+                                   placeholder="Enter name" name="item_name">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script src="{% static 'jobqr/js/register.js' %}"></script>
+{% endblock %}

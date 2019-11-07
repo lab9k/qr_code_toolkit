@@ -11,6 +11,7 @@ class Job(models.Model):
 
 
 class TrackedItem(models.Model):
+    item_id = models.IntegerField(blank=False, primary_key=True, unique=True, auto_created=False)
     name = models.CharField(max_length=255)
     location = PlainLocationField(based_fields=['location'])
     is_in_use = models.BooleanField(default=False)
