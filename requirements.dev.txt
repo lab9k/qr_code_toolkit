@@ -1,5 +1,5 @@
+djangorestframework
 dj-database-url==0.5.0
 Django==2.2.4
 django-location-field==2.1.0
 django-qr-code==1.0.0
-qrcode==6.1

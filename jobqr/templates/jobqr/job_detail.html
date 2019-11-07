@@ -1,0 +1,63 @@
+{% extends 'jobqr/layout.html' %}
+{% load static %}
+
+{% block head %}
+    <title>Job - {{ job.name }}</title>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.2.0/dist/jsQR.min.js"></script>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <h1>{{ job.name }}</h1>
+        <div class="row">
+            <p>This job can be found with this qr code: </p>
+            <img src="https://qrcodeservice.herokuapp.com/?query={{ qr_url }}"
+                 alt="qr code to this job">
+        </div>
+        <div class="row">
+            <h3>current items</h3>
+            <p>make this a list with action buttons</p>
+            {#            <ul id="current_items">#}
+            {##}
+            {#            </ul>#}
+            <table class="table table-sm table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">#Id</th>
+                    <th scope="col">Naam</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody id="current_items">
+
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <button id="start_adding_items" class="btn btn-primary">Scan Items</button>
+        </div>
+        <div class="row">
+            <div id="output" hidden>
+                <div id="outputMessage">No QR code detected.</div>
+                <div hidden>
+                    <b>Data:</b> <span id="outputData"></span>
+                    <form method="post" id="add_form">
+                        {% csrf_token %}
+                        <input type="text" hidden name="qr_link" id="qr_link"/>
+                        <button id="add_qr_link" type="submit" class="btn btn-success">Add Item</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div id="add_items" hidden>
+                <div id="loadingMessage">🎥 Unable to access video stream (please make sure you have a webcam enabled)
+                </div>
+                <canvas id="canvas" hidden></canvas>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'jobqr/js/index.js' %}"></script>
+{% endblock %}

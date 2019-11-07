@@ -1,0 +1,6 @@
+{% extends 'jobqr/layout.html' %}
+{% block content %}
+    {% for job in job_list %}
+        <li><a href="{% url 'job_detail' job.id %}">{{ job.name }}</a></li>
+    {% endfor %}
+{% endblock %}

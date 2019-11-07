@@ -38,10 +38,11 @@ DJANGO_APPS = [
 ]
 THIRD_PARTY_APPS = [
     'location_field.apps.DefaultConfig',
-    'qr_code'
+    'rest_framework'
 ]
 CUSTOM_APPS = [
-    'iotqrcode'
+    'jobqr',
+    'register'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + CUSTOM_APPS
@@ -145,4 +146,12 @@ LOCATION_FIELD = {
             LOCATION_FIELD_PATH + '/js/form.js',
         ),
     },
+}
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
 }

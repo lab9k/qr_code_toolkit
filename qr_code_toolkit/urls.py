@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
+from qr_code_toolkit.views import HomeView
+from jobqr.urls import router
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,5 +25,8 @@ urlpatterns = [
         path('login/', auth_views.LoginView.as_view(), name='login'),
         path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     ])),
-    path('', include('iotqrcode.urls'))
+    path('', HomeView.as_view(), name='home'),
+    path('job/', include('jobqr.urls')),
+    path('api/', include(router.urls)),
+    path('register/', include('register.urls'))
 ]
