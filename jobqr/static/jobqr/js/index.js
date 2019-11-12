@@ -82,8 +82,8 @@ const App = {
     }
 
 
-    const width = $(window).width() - 32;
-    const height = $(window).height() - 128;
+    const width = Orientation.dimensions.width;
+    const height = Orientation.dimensions.height;
     // Use facingMode: environment to attemt to get the front camera on phones
     navigator.mediaDevices.getUserMedia({video: {facingMode: "environment", width, height}}).then(function (stream) {
       video.srcObject = stream;
