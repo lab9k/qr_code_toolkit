@@ -77,3 +77,14 @@ class RegisterView(TemplateView):
                 new_item.save()
                 return self.render_to_response(context={'message': 'Item added successfully', 'success': True})
         return self.render_to_response(context={'message': 'Form invalid', 'success': False})
+
+
+class ItemDetailView(TemplateView):
+    template_name = 'jobqr/item_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ItemDetailView, self).get_context_data(**kwargs)
+
+        context['url'] = self.request.build_absolute_uri()
+
+        return context
