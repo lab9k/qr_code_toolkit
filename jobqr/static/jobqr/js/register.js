@@ -27,8 +27,8 @@ const App = {
     navigator.mediaDevices.getUserMedia({
       video: {
         facingMode: "environment",
-        width: width,
-        height: height
+        width: height,
+        height: width
       }
     }).then(function (stream) {
       video.srcObject = stream;
