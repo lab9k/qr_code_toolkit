@@ -21,8 +21,8 @@ const App = {
       ctx.stroke();
     }
 
-    const width = document.documentElement.clientWidth - 32;
-    const height = document.documentElement.clientHeight - 128;
+    const width = Orientation.dimensions.width - 32;
+    const height = Orientation.dimensions.height - 128;
 
     navigator.mediaDevices.getUserMedia({
       video: {
