@@ -17,7 +17,6 @@ class JobView(View):
         return view(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        print(request.POST)
         form = QrForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
