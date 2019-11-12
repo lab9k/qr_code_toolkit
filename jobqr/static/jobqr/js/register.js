@@ -21,8 +21,8 @@ const App = {
       ctx.stroke();
     }
 
-    const width = $(window).width() - 32;
-    const height = $(window).height() - 128;
+    const width = document.documentElement.clientWidth - 32;
+    const height = document.documentElement.clientHeight - 128;
 
     navigator.mediaDevices.getUserMedia({
       video: {
