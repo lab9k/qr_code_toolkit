@@ -21,12 +21,14 @@ const App = {
       ctx.stroke();
     }
 
+    const width = $(window).width() - 32;
+    const height = $(window).height() - 128;
 
     navigator.mediaDevices.getUserMedia({
       video: {
         facingMode: "environment",
-        width: $(window).width() - 32,
-        height: $(window).height() - 128
+        width: width,
+        height: height
       }
     }).then(function (stream) {
       video.srcObject = stream;
@@ -71,4 +73,6 @@ const App = {
     $("#itemModal").modal('show');
   }
 };
-App.init();
+$(document).ready(function () {
+  App.init();
+});
