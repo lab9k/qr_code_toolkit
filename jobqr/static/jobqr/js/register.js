@@ -25,7 +25,7 @@ const App = {
       video.srcObject = stream;
       video.setAttribute("playsinline", "true");
       video.play();
-      this.cancellationId = requestAnimationFrame(tick);
+      App.cancellationId = requestAnimationFrame(tick);
     });
 
     function tick() {

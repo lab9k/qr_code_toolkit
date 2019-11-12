@@ -17,20 +17,16 @@ class JobView(View):
         return view(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
+        print(request.POST)
         form = QrForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            url = data.get('scanned_url')
+            item_id = data.get('item_id')
 
             job_id = kwargs.get('pk')
             job = Job.objects.get(pk=job_id)
 
-            if url.endswith("/"):
-                item_id = url[-2:-1]
-            else:
-                item_id = url[:-1]
-
-            obj, created = TrackedItem.objects.get_or_create(item_id=item_id)
+            obj = TrackedItem.objects.get(item_id=item_id)
 
             obj.job = job
             obj.is_in_use = True

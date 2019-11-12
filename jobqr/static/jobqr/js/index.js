@@ -3,27 +3,30 @@ const App = {
     this.addBtn = document.getElementById("start_adding_items");
     this.addSection = document.getElementById("add_items");
     this.addForm = document.getElementById('add_form');
-    this.qrLinkInput = document.getElementById('qr_link');
+    this.itemIdInput = document.getElementById('item_id_input');
     this.csrfInput = document.getElementsByName("csrfmiddlewaretoken");
     this.currentItemsUl = document.getElementById("current_items");
     this.currentItems = [];
     this.initCurrentItems();
     this.addBtn.addEventListener('click', this.detectQr.bind(this));
     this.addForm.addEventListener('submit', this.addFormListener.bind(this));
+
+    this.cancellationId = 0;
   },
   addFormListener(ev) {
-
-    const item = this.qrLinkInput.value;
-
     const items = new FormData();
 
+    const item_id = this.itemIdInput.value;
+
     items.append('csrfmiddlewaretoken', this.csrfInput[0].value);
-    items.append('scanned_url', item);
+    items.append('item_id', item_id);
 
     fetch('', {method: 'POST', body: items})
       .then(response => response.json())
       .then(() => {
-        this.initCurrentItems();
+        this.initCurrentItems().then(() => {
+          $("#itemModal").modal('toggle');
+        });
       });
 
     ev.preventDefault();
@@ -33,7 +36,7 @@ const App = {
   initCurrentItems() {
     const url = '/api' + window.location.pathname;
 
-    fetch(url).then(res => res.json()).then(({current_items}) => {
+    return fetch(url).then(res => res.json()).then(({current_items}) => {
       this.updateCurrentItems(current_items);
     });
   },
@@ -66,7 +69,8 @@ const App = {
     const loadingMessage = document.getElementById("loadingMessage");
     const outputContainer = document.getElementById("output");
     const outputMessage = document.getElementById("outputMessage");
-    const outputData = document.getElementById("outputData");
+
+    //const outputData = document.getElementById("outputData");
 
     function drawLine(begin, end, color) {
       canvas.beginPath();
@@ -82,7 +86,7 @@ const App = {
       video.srcObject = stream;
       video.setAttribute("playsinline", 'true'); // required to tell iOS safari we don't want fullscreen
       video.play();
-      requestAnimationFrame(tick);
+      App.cancellationId = requestAnimationFrame(tick);
     });
 
     function tick() {
@@ -103,18 +107,31 @@ const App = {
           drawLine(code.location.topRightCorner, code.location.bottomRightCorner, "#FF3B58");
           drawLine(code.location.bottomRightCorner, code.location.bottomLeftCorner, "#FF3B58");
           drawLine(code.location.bottomLeftCorner, code.location.topLeftCorner, "#FF3B58");
+          cancelAnimationFrame(App.cancellationId);
           outputMessage.hidden = true;
-          outputData.parentElement.hidden = false;
-          outputData.innerText = code.data;
-          App.qrLinkInput.setAttribute('value', code.data);
+          // outputData.parentElement.hidden = false;
+          // outputData.innerText = code.data;
+          // App.qrLinkInput.setAttribute('value', code.data);
+          const qrUrl = new URL(code.data);
+          const id = qrUrl.pathname.match(/[0-9]+/);
 
+          fetch(`/api/item/${id}`).then(res => res.json()).then(App.initForm);
+          return;
         } else {
           outputMessage.hidden = false;
-          outputData.parentElement.hidden = true;
+          // outputData.parentElement.hidden = true;
         }
       }
-      requestAnimationFrame(tick);
+      App.cancellationId = requestAnimationFrame(tick);
     }
+  },
+  initForm(item) {
+    console.log(item);
+    // handle data
+    $("#item_add_name").text(item.name);
+    $("#item_id_input").val(item.pk);
+    // show modal
+    $("#itemModal").modal('show');
   }
 };
 App.init();

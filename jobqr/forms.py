@@ -1,8 +1,18 @@
 from django import forms
+from rest_framework.exceptions import ValidationError
+
+from jobqr.models import TrackedItem
 
 
 class QrForm(forms.Form):
-    scanned_url = forms.URLField()
+    item_id = forms.IntegerField()
+
+    def clean_item_id(self):
+        item_id = self.cleaned_data['item_id']
+        if not TrackedItem.objects.filter(item_id=item_id).exists():
+            raise ValidationError(detail="Item does not exist. Have you tried registering it?")
+        else:
+            return item_id
 
 
 class RegisterForm(forms.Form):
