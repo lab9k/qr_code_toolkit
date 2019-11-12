@@ -21,7 +21,14 @@ const App = {
       ctx.stroke();
     }
 
-    navigator.mediaDevices.getUserMedia({video: {facingMode: "environment"}}).then(function (stream) {
+
+    navigator.mediaDevices.getUserMedia({
+      video: {
+        facingMode: "environment",
+        width: $(window).width() - 32,
+        height: $(window).height() - 128
+      }
+    }).then(function (stream) {
       video.srcObject = stream;
       video.setAttribute("playsinline", "true");
       video.play();
