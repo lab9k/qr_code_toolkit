@@ -6,6 +6,7 @@ from jobqr.models import TrackedItem
 
 class QrForm(forms.Form):
     item_id = forms.IntegerField()
+    location = forms.CharField(max_length=128)
 
     def clean_item_id(self):
         item_id = self.cleaned_data['item_id']

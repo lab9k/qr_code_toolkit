@@ -1,3 +1,5 @@
+import itertools
+
 from django.db import models
 from location_field.models.plain import PlainLocationField
 
@@ -5,9 +7,14 @@ from location_field.models.plain import PlainLocationField
 class Job(models.Model):
     name = models.CharField(max_length=255)
 
-    def get_qr_data(self):
-        data = dict(id=self.id, name=self.name, type='Job')
-        return data
+    def items_str(self):
+        items = [item.name for item in self.current_items.all()]
+        return ", ".join(items)
+
+    items_str.short_description = 'Currently tracked items'
+
+    def __str__(self):
+        return f'{self.name}'
 
 
 class TrackedItem(models.Model):
@@ -20,3 +27,6 @@ class TrackedItem(models.Model):
     def get_qr_data(self):
         data = dict(id=self.id, name=self.name, type='TrackedItem')
         return data
+
+    def __str__(self):
+        return f'{self.name}'

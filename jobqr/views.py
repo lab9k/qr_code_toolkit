@@ -28,6 +28,7 @@ class JobView(View):
             obj = TrackedItem.objects.get(item_id=item_id)
 
             obj.job = job
+            obj.location = data.get('location')
             obj.is_in_use = True
 
             obj.save()

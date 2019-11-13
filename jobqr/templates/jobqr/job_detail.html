@@ -58,6 +58,12 @@
                 <form method="post" id="add_form">
                     {% csrf_token %}
                     <div class="modal-body">
+                        <div id="loading_spinner" hidden>
+                            <p>Getting your location to register the item.</p>
+                            <div class="spinner-border text-info" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
                         <input type="hidden" class="form-control" id="item_id_input"
                                name="item_id" readonly>
                         <p><b>Name:</b> <span id="item_add_name"></span></p>

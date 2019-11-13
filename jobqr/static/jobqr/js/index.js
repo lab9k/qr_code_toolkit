@@ -14,20 +14,46 @@ const App = {
     this.cancellationId = 0;
   },
   addFormListener(ev) {
-    const items = new FormData();
+    $("#loading_spinner").hidden = false;
+    this.findLocation((position) => {
+      const coords = position.coords;
+      const location = `${coords.latitude},${coords.longitude}`;
 
-    const item_id = this.itemIdInput.value;
+      const items = new FormData();
 
-    items.append('csrfmiddlewaretoken', this.csrfInput[0].value);
-    items.append('item_id', item_id);
+      const item_id = this.itemIdInput.value;
 
-    fetch('', {method: 'POST', body: items})
-      .then(response => response.json())
-      .then(() => {
-        this.initCurrentItems().then(() => {
-          $("#itemModal").modal('toggle');
+      items.append('csrfmiddlewaretoken', this.csrfInput[0].value);
+      items.append('item_id', item_id);
+      items.append('location', location);
+
+      fetch('', {method: 'POST', body: items})
+        .then(response => response.json())
+        .then(() => {
+          this.initCurrentItems().then(() => {
+            $("#itemModal").modal('toggle');
+            $("#loading_spinner").hidden = true;
+          });
         });
-      });
+
+    }, (err) => {
+      console.warn(err);
+      const items = new FormData();
+
+      const item_id = this.itemIdInput.value;
+
+      items.append('csrfmiddlewaretoken', this.csrfInput[0].value);
+      items.append('item_id', item_id);
+
+      fetch('', {method: 'POST', body: items})
+        .then(response => response.json())
+        .then(() => {
+          this.initCurrentItems().then(() => {
+            $("#itemModal").modal('toggle');
+          });
+        });
+
+    });
 
     ev.preventDefault();
     return false;
@@ -138,7 +164,13 @@ const App = {
       // show modal
       $("#itemModal").modal('show');
     }
-
+  },
+  findLocation(success, error) {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(success, error, {enableHighAccuracy: true})
+    } else {
+      error({message: "Geolocation is not available", code: 1})
+    }
   }
 };
 App.init();

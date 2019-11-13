@@ -1,6 +1,14 @@
 from django.contrib import admin
 from jobqr.models import Job, TrackedItem
 
-# Register your models here.
-admin.site.register(Job)
-admin.site.register(TrackedItem)
+
+class JobAdmin(admin.ModelAdmin):
+    list_display = ('name', 'items_str')
+
+
+class TrackedItemAdmin(admin.ModelAdmin):
+    list_display = ('name', 'job')
+
+
+admin.site.register(Job, JobAdmin)
+admin.site.register(TrackedItem, TrackedItemAdmin)
