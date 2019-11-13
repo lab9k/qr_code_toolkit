@@ -6,12 +6,18 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
-            <li class="nav-item {% if request.path == '/job/' %}active{% endif %}">
-                <a class="nav-link" href="{% url 'job_list' %}">Scan{% if request.path == '/job/' %}
-                    <span class="sr-only">(current)</span>{% endif %}</a>
+            <li class="nav-item {% if request.resolver_match.url_name == 'job_detail' or request.resolver_match.url_name == 'job_list' %}active{% endif %}">
+                <a class="nav-link" href="{% url 'job_list' %}">Scan
+                    {% if request.resolver_match.url_name == 'job_detail' or request.resolver_match.url_name == 'job_list' %}
+                        <span class="sr-only">(current)</span>{% endif %}</a>
             </li>
-            <li class="nav-item {% if request.path == '/register/' %}active{% endif %}">
-                <a class="nav-link" href="{% url 'register' %}">Register{% if request.path == '/job/' %}
+            <li class="nav-item {% if request.resolver_match.url_name ==  'register' %}active{% endif %}">
+                <a class="nav-link" href="{% url 'register' %}">Register
+                    {% if request.resolver_match.url_name ==  'register' %}
+                        <span class="sr-only">(current)</span>{% endif %}</a>
+            </li>
+            <li class="nav-item {% if request.resolver_match.url_name ==  'map' %}active{% endif %}">
+                <a href="{% url 'map' %}" class="nav-link">Map{% if request.resolver_match.url_name ==  'map' %}
                     <span class="sr-only">(current)</span>{% endif %}</a>
             </li>
         </ul>

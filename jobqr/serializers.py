@@ -6,7 +6,7 @@ from jobqr.models import TrackedItem, Job
 class TrackedItemSerializer(ModelSerializer):
     class Meta:
         model = TrackedItem
-        fields = ['name', 'location', 'is_in_use', 'job', 'pk']
+        fields = ['name', 'location', 'is_in_use', 'job', 'pk', 'last_update']
 
 
 class JobSerializer(ModelSerializer):

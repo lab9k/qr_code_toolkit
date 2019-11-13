@@ -89,3 +89,7 @@ class ItemDetailView(TemplateView):
         context['url'] = self.request.build_absolute_uri()
 
         return context
+
+
+class MapView(TemplateView):
+    template_name = 'jobqr/map.html'
