@@ -26,8 +26,8 @@ const MapApp = {
 
       const lastUpdate = moment(item.last_update);
 
-      marker.bindPopup(`<p><b>Name:</b> ${item.name}</p>
-                        <p><b>Last update received:</b> ${lastUpdate.format('LL')}</p>`);
+      marker.bindPopup(`<p><b>Naam:</b> ${item.name}</p>
+                        <p><b>Laatste update:</b> ${lastUpdate.format('LL')}</p>`);
       return marker;
     });
   }
