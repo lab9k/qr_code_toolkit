@@ -129,12 +129,16 @@ const App = {
     }
   },
   initForm(item) {
-    console.log(item);
-    // handle data
-    $("#item_add_name").text(item.name);
-    $("#item_id_input").val(item.pk);
-    // show modal
-    $("#itemModal").modal('show');
+    if (item.detail && item.detail === "Not found.") {
+      alert("This item is not registered.");
+    } else {
+      // handle data
+      $("#item_add_name").text(item.name);
+      $("#item_id_input").val(item.pk);
+      // show modal
+      $("#itemModal").modal('show');
+    }
+
   }
 };
 App.init();

@@ -5,7 +5,6 @@ const Orientation = (function orientation() {
     const ori = screen.orientation.angle;
     const width = (ori === 90 || ori === -90) ? screen.width : screen.height;
     const height = (width === screen.width) ? screen.height : screen.width;
-    console.log({width, height, ori, sWidth: screen.width, sHeight: screen.height});
     return {width, height};
   };
 
