@@ -4,7 +4,6 @@ $(document).ready(function () {
 
 const MapApp = {
   init() {
-    this.items = [];
     this.initMap().then(map => this.fetchItems().then(items => this.addMarkers(map, items)));
   },
   initMap() {
@@ -20,7 +19,7 @@ const MapApp = {
     return fetch('/api/item').then(res => res.json())
   },
   addMarkers(map, items) {
-    const markers = items.map(item => {
+    items.forEach(item => {
       const pos = item.location.split(",").map(el => parseFloat(el));
       const marker = L.marker(pos).addTo(map);
 
