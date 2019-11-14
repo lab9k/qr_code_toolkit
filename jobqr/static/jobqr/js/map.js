@@ -21,13 +21,14 @@ const MapApp = {
   addMarkers(map, items) {
     items.forEach(item => {
       const pos = item.location.split(",").map(el => parseFloat(el));
-      const marker = L.marker(pos).addTo(map);
+      if (pos.length === 2) {
+        const marker = L.marker(pos).addTo(map);
 
-      const lastUpdate = moment(item.last_update);
+        const lastUpdate = moment(item.last_update);
 
-      marker.bindPopup(`<p><b>Naam:</b> ${item.name}</p>
+        marker.bindPopup(`<p><b>Naam:</b> ${item.name}</p>
                         <p><b>Laatste update:</b> ${lastUpdate.format('LL')}</p>`);
-      return marker;
+      }
     });
   }
 };
