@@ -8,4 +8,5 @@ pytz==2019.3
 qrcode==6.1
 six==1.13.0
 sqlparse==0.3.0
+gunicorn
 django_heroku
