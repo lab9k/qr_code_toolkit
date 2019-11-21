@@ -1,6 +1,7 @@
 from django.forms.models import model_to_dict
 from django.http import JsonResponse
 from django.views.generic import DetailView, ListView, View, RedirectView, TemplateView
+import json
 
 from jobqr.forms import QrForm, RegisterForm
 from jobqr.models import Job, TrackedItem
@@ -93,3 +94,18 @@ class ItemDetailView(TemplateView):
 
 class MapView(TemplateView):
     template_name = 'jobqr/map.html'
+
+
+class HistoryView(DetailView):
+    model = TrackedItem
+    context_object_name = 'item'
+    template_name = 'jobqr/item_history.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(HistoryView, self).get_context_data(**kwargs)
+        history = context['item'].get_history().values()
+        serialized_strings = [x['serialized_data'] for x in history]
+        serialized_data = [json.loads(x)[0] for x in serialized_strings]
+        item_dict = model_to_dict(context['item'])
+        context['item'] = {**item_dict, 'history': serialized_data}
+        return context

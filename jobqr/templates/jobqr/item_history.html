@@ -1,0 +1,13 @@
+{% extends 'jobqr/layout.html' %}
+{% block  content %}
+
+{% endblock %}
+{% block scripts %}
+    {{ item|json_script:"item_data" }}
+    <script>
+      $(document).ready(() => {
+        const elem = $("#item_data");
+        console.log(JSON.parse(elem.text()));
+      })
+    </script>
+{% endblock %}

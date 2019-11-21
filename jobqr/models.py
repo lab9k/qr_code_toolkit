@@ -1,7 +1,6 @@
-import itertools
-
 from django.db import models
 from location_field.models.plain import PlainLocationField
+from reversion.models import Version
 
 
 class Job(models.Model):
@@ -28,6 +27,10 @@ class TrackedItem(models.Model):
     def get_qr_data(self):
         data = dict(id=self.id, name=self.name, type='TrackedItem')
         return data
+
+    def get_history(self):
+        obj = Version.objects.get_for_model(self)
+        return obj
 
     def __str__(self):
         return f'{self.name}'

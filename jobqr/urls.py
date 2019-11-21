@@ -1,10 +1,10 @@
 from django.urls import path
-from jobqr.views import JobListView, JobView, RegisterView, HomeView, ItemDetailView, MapView
+from jobqr.views import JobListView, JobView, RegisterView, HomeView, ItemDetailView, MapView, HistoryView
 from rest_framework.routers import DefaultRouter
 from jobqr.viewsets import ItemViewSet, JobViewSet, untrack
 
 router = DefaultRouter()
-router.register(r'item', ItemViewSet)
+router.register(r'device', ItemViewSet)
 router.register(r'job', JobViewSet)
 
 urlpatterns = [
@@ -14,5 +14,6 @@ urlpatterns = [
     path('job/<int:pk>/untrack/<int:item_pk>/', untrack, name='untrack'),
     path('register/', RegisterView.as_view(), name='register'),
     path('device/<int:pk>/', ItemDetailView.as_view(), name='device_detail'),
+    path('device/<int:pk>/history/', HistoryView.as_view(), name='device_history'),
     path('map/', MapView.as_view(), name='map')
 ]

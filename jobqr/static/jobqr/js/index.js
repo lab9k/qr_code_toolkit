@@ -144,7 +144,7 @@ const App = {
           const qrUrl = new URL(code.data);
           const id = qrUrl.pathname.match(/[0-9]+/);
 
-          fetch(`/api/item/${id}`).then(res => res.json()).then(App.initForm);
+          fetch(`/api/device/${id}`).then(res => res.json()).then(App.initForm);
           return;
         } else {
           outputMessage.hidden = false;
