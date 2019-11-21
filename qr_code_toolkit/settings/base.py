@@ -38,7 +38,8 @@ DJANGO_APPS = [
 ]
 THIRD_PARTY_APPS = [
     'location_field.apps.DefaultConfig',
-    'rest_framework'
+    'rest_framework',
+    'reversion'
 ]
 CUSTOM_APPS = [
     'jobqr',
