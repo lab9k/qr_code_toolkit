@@ -74,6 +74,8 @@ const App = {
                 <td>${item.pk}</td>
                 <td>${item.name}</td>
                 <td>${lastUpdate}</td>
+                <td><input type="checkbox" class="form-check-input" disabled ${item.missing ? 'checked' : ''}></td>
+                <td><button type="button" class="btn btn-warning" onclick="App.reportMissing(this)" value="${item.pk}">${item.missing ? 'Report found' : 'Report missing'}</button></td>
               </tr>`;
     }).join('');
   },
@@ -86,6 +88,14 @@ const App = {
         console.log(json);
         App.initCurrentItems();
       })
+  },
+  reportMissing(item) {
+    const data = new FormData();
+    data.append('csrfmiddlewaretoken', this.csrfInput[0].value);
+    fetch(`/device/${item.value}/missing/`, {
+      method: 'POST',
+      body: data
+    }).then(() => App.initCurrentItems()).catch(err => console.log(err))
   },
   updateItem(item) {
     this.addFormListener(null, item.value);

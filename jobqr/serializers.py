@@ -19,7 +19,7 @@ class TrackedItemSerializer(ModelSerializer):
 
     class Meta:
         model = TrackedItem
-        fields = ['name', 'location', 'is_in_use', 'job', 'pk', 'last_update', 'history']
+        fields = ['name', 'location', 'is_in_use', 'job', 'pk', 'last_update', 'history', 'missing']
 
 
 class JobSerializer(ModelSerializer):

@@ -32,3 +32,15 @@ def untrack(request, pk, item_pk):
                                 status=status.HTTP_400_BAD_REQUEST)
     else:
         return JsonResponse({'error': 'item cannot be found'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+@require_http_methods(['POST'])
+def report_missing(request, pk):
+    item = TrackedItem.objects.get(item_id=pk)
+    if item is not None:
+        item.missing = not item.missing
+        item.save()
+        serializer = TrackedItemSerializer(item)
+        return JsonResponse(serializer.data)
+    else:
+        return JsonResponse({'error': 'item cannot be found'}, status=status.HTTP_400_BAD_REQUEST)

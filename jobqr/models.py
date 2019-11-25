@@ -23,6 +23,7 @@ class TrackedItem(models.Model):
     is_in_use = models.BooleanField(default=False)
     job = models.ForeignKey('Job', on_delete=models.SET_NULL, blank=True, null=True, related_name='current_items')
     last_update = models.DateTimeField(auto_now=True, auto_now_add=False)
+    missing = models.BooleanField(default=False)
 
     def get_qr_data(self):
         data = dict(id=self.id, name=self.name, type='TrackedItem')
