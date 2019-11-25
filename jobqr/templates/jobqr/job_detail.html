@@ -4,6 +4,8 @@
 {% block head %}
     <title>Job - {{ job.name }}</title>
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.2.0/dist/jsQR.min.js"></script>
+    <script src="https://unpkg.com/dayjs"></script>
+    <script src="https://unpkg.com/dayjs/locale/nl-be"></script>
 {% endblock %}
 {% block content %}
     <div class="container">
@@ -20,6 +22,7 @@
                 <tr>
                     <th scope="col">#Id</th>
                     <th scope="col">Naam</th>
+                    <th scope="col">Laatste update</th>
                     <th scope="col"></th>
                 </tr>
                 </thead>
@@ -29,6 +32,7 @@
             </table>
         </div>
         <div class="row">
+            <p class="col-md-12">Scan Items voor registratie/update</p>
             <button id="start_adding_items" class="btn btn-primary">Scan Items</button>
         </div>
         <div class="row">

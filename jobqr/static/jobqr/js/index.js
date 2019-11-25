@@ -13,7 +13,7 @@ const App = {
 
     this.cancellationId = 0;
   },
-  addFormListener(ev) {
+  addFormListener(ev, item_id) {
     $("#loading_spinner").hidden = false;
     this.findLocation((position) => {
       const coords = position.coords;
@@ -21,43 +21,41 @@ const App = {
 
       const items = new FormData();
 
-      const item_id = this.itemIdInput.value;
+      if (!item_id) item_id = this.itemIdInput.value;
 
       items.append('csrfmiddlewaretoken', this.csrfInput[0].value);
       items.append('item_id', item_id);
       items.append('location', location);
 
-      fetch('', {method: 'POST', body: items})
-        .then(response => response.json())
-        .then(() => {
-          this.initCurrentItems().then(() => {
-            $("#itemModal").modal('toggle');
-            $("#loading_spinner").hidden = true;
-          });
-        });
+      this.sendUpdate(ev, items);
 
     }, (err) => {
       console.warn(err);
       const items = new FormData();
 
-      const item_id = this.itemIdInput.value;
+      if (!item_id) item_id = this.itemIdInput.value;
 
       items.append('csrfmiddlewaretoken', this.csrfInput[0].value);
       items.append('item_id', item_id);
 
-      fetch('', {method: 'POST', body: items})
-        .then(response => response.json())
-        .then(() => {
-          this.initCurrentItems().then(() => {
-            $("#itemModal").modal('toggle');
-          });
-        });
-
+      this.sendUpdate(ev, items);
     });
 
-    ev.preventDefault();
+    if (ev) ev.preventDefault();
     return false;
 
+  },
+  sendUpdate(ev, items) {
+    fetch('', {method: 'POST', body: items})
+      .then(response => response.json())
+      .then(() => {
+        this.initCurrentItems().then(() => {
+          if (ev) {
+            $("#itemModal").modal('toggle');
+            $("#loading_spinner").hidden = true;
+          }
+        });
+      });
   },
   initCurrentItems() {
     const url = '/api' + window.location.pathname;
@@ -68,12 +66,14 @@ const App = {
   },
   updateCurrentItems(items) {
     this.currentItems = items;
-
+    console.log(items);
     this.currentItemsUl.innerHTML = this.currentItems.map(item => {
+      const updateBtn = `<td><button type="button" class="btn btn-primary" onclick="App.updateItem(this)" value="${item.pk}">Update</button></td>`;
+      const lastUpdate = dayjs(item.last_update, {locale: 'nl-be'}).format('DD/MM/YYYY HH:mm:ss');
       return `<tr>
                 <td>${item.pk}</td>
                 <td>${item.name}</td>
-                <td><button type="button" class="btn btn-danger" onclick="App.untrackItem(this)" value="${item.pk}">Remove</button></td>
+                <td>${lastUpdate}</td>
               </tr>`;
     }).join('');
   },
@@ -86,6 +86,9 @@ const App = {
         console.log(json);
         App.initCurrentItems();
       })
+  },
+  updateItem(item) {
+    this.addFormListener(null, item.value);
   },
   detectQr() {
     this.addSection.hidden = false;
