@@ -45,6 +45,10 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ version.revision.get_comment }}</h5>
                     <h6 class="card-subtitle mb-2 text-muted">{{ version.revision.date_created }}</h6>
+                    <dl class="row">
+                        <dt class="col-sm-3">Changed by</dt>
+                        <dd class="col-sm-9">{{ version.revision.user }}</dd>
+                    </dl>
                     <dl class="row version" data-value="{{ version.serialized_data }}">
 
                     </dl>
@@ -109,7 +113,6 @@
             return `<dt class="col-sm-3">${key}</dt>
                     <dd class="col-sm-9">${value}</dd>`;
           }).join('');
-          console.log(html);
           $(target).html(html);
         })
       }
