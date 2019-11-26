@@ -30,7 +30,7 @@ class TrackedItem(models.Model):
         return data
 
     def get_history(self):
-        obj = Version.objects.get_for_model(self)
+        obj = Version.objects.get_for_object(self)
         return obj
 
     def __str__(self):
