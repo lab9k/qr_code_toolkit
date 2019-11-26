@@ -39,7 +39,8 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     'location_field.apps.DefaultConfig',
     'rest_framework',
-    'reversion'
+    'reversion',
+    'debug_toolbar'
 ]
 CUSTOM_APPS = [
     'jobqr',
@@ -48,6 +49,7 @@ CUSTOM_APPS = [
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + CUSTOM_APPS
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -62,8 +64,7 @@ ROOT_URLCONF = 'qr_code_toolkit.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
-        ,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -111,7 +112,7 @@ LOGIN_REDIRECT_URL = 'home'
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'nl-be'
 
 TIME_ZONE = 'Europe/Brussels'
 
@@ -155,3 +156,8 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+    'localhost'
+]

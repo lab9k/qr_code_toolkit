@@ -1,3 +1,4 @@
+django-debug-toolbar
 djangorestframework
 dj-database-url==0.5.0
 Django==2.2.4

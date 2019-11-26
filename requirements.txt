@@ -9,4 +9,5 @@ qrcode==6.1
 six==1.13.0
 sqlparse==0.3.0
 gunicorn
+django-debug-toolbar
 django_heroku
