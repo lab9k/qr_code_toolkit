@@ -46,7 +46,12 @@ const MapApp = {
     });
   },
   fetchItems() {
-    return fetch('/api/device').then(res => res.json()).then(items => {
+    let url = '/api/device';
+    if (window.location.pathname.includes('missing')) {
+      url += '/?missing=1'
+    }
+    console.log('using url' + url);
+    return fetch(url).then(res => res.json()).then(items => {
       this.items = items;
       return items;
     })

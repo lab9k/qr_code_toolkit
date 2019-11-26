@@ -16,5 +16,6 @@ urlpatterns = [
     path('device/<int:pk>/', ItemDetailView.as_view(), name='device_detail'),
     path('device/<int:pk>/missing/', report_missing, name='report_missing'),
     path('device/<int:pk>/history/', HistoryView.as_view(), name='device_history'),
-    path('map/', MapView.as_view(), name='map')
+    path('map/', MapView.as_view(), name='map'),
+    path('map/missing', MapView.as_view(), name='map_missing')
 ]

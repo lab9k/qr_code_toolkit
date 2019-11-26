@@ -7,8 +7,15 @@ from django.views.decorators.http import require_http_methods
 
 
 class ItemViewSet(ModelViewSet):
-    queryset = TrackedItem.objects.all()
     serializer_class = TrackedItemSerializer
+    queryset = TrackedItem.objects.all()
+
+    def get_queryset(self):
+        only_missing = self.request.query_params.get('missing')
+        if only_missing is '1':
+            return TrackedItem.objects.filter(missing=True)
+        else:
+            return TrackedItem.objects.all()
 
 
 class JobViewSet(ModelViewSet):

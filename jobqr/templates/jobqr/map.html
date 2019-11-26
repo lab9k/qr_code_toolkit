@@ -26,6 +26,23 @@
     </style>
 {% endblock %}
 {% block content %}
+    {% if request.resolver_match.url_name ==  'map' %}
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-2"><strong>All objects</strong></div>
+                <div class="col-sm-2"><a href="{% url 'map_missing' %}">Go to missing objects</a></div>
+                <div class="col-sm-2"></div>
+            </div>
+        </div>
+    {% elif request.resolver_match.url_name ==  'map_missing' %}
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-2"><strong>Missing objects</strong></div>
+                <div class="col-sm-2"><a href="{% url 'map' %}">Go to all objects</a></div>
+                <div class="col-sm-2"></div>
+            </div>
+        </div>
+    {% endif %}
     <div id="map"></div>
 {% endblock %}
 {% block scripts %}
