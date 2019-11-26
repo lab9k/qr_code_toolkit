@@ -1,13 +1,117 @@
 {% extends 'jobqr/layout.html' %}
+{% block head %}
+    <title>{{ item.name }} -- History</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+          integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+            integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+            crossorigin=""></script>
+    <style>
+        .map {
+            height: 180px;
+            width: 60%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+{% endblock %}
 {% block  content %}
+    <div class="container">
+        <div class="card mb-5 mt-5">
+            <div class="card-body">
+                <h5 class="card-title">Current Version</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ item.last_update }}</h6>
+                <dl class="row">
+                    <dt class="col-sm-3">Name</dt>
+                    <dd class="col-sm-9">{{ item.name }}</dd>
+                    <dt class="col-sm-3">Job name</dt>
+                    <dd class="col-sm-9">{{ item.job.name }}</dd>
+                    <dt class="col-sm-3">Location</dt>
+                    <dd class="col-sm-9 location-text">{{ item.location }}</dd>
+                    <dt class="col-sm-3">Is in use</dt>
+                    <dd class="col-sm-9">{{ item.is_in_use }}</dd>
+                    <dt class="col-sm-3">Is missing</dt>
+                    <dd class="col-sm-9">{{ item.missing }}</dd>
+                </dl>
+                <div class="card-text">
+                    <div id="loc-0" class="mt-3 mb-3 map"></div>
+                </div>
+            </div>
+        </div>
+        <h3>History</h3>
+        {% for version in item.get_history %}
+            <div class="card mb-2">
+                <div class="card-body">
+                    <h5 class="card-title">{{ version.revision.get_comment }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ version.revision.date_created }}</h6>
+                    <dl class="row version" data-value="{{ version.serialized_data }}">
+
+                    </dl>
+
+                    <button class="btn btn-primary btn-sm location-btn"
+                            value="{{ version.serialized_data }}"
+                            data-id="loc-{{ forloop.counter }}"
+                    >Show Location
+                    </button>
+                    <div id="loc-{{ forloop.counter }}" class="mt-3 mb-3"></div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
 
 {% endblock %}
 {% block scripts %}
-    {{ item|json_script:"item_data" }}
     <script>
       $(document).ready(() => {
-        const elem = $("#item_data");
-        console.log(JSON.parse(elem.text()));
-      })
+        $('.location-btn').on('click', (ev) => {
+          addMapToVersion(ev);
+        });
+        addDefaultMap();
+        fixHistoryData();
+      });
+
+      function addDefaultMap() {
+        const locationText = $('.location-text').text();
+        const location = locationText.split(',');
+
+        const map = L.map('loc-0').setView(location, 15);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        L.marker(location).addTo(map);
+      }
+
+      function addMapToVersion(ev) {
+        ev.target.hidden = true;
+
+        const data = JSON.parse(ev.target.value);
+
+        const divId = ev.target.getAttribute('data-id');
+        document.getElementById(divId).classList.add('map');
+
+        const location = data[0].fields.location.split(',');
+        const map = L.map(divId).setView(location, 15);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        L.marker(location).addTo(map);
+      }
+
+      function fixHistoryData() {
+        $('dl.row.version').each((i, target) => {
+          const data = JSON.parse($(target).attr('data-value'))[0].fields;
+          console.log(data);
+          const html = Object.entries(data).map(([key, value]) => {
+            return `<dt class="col-sm-3">${key}</dt>
+                    <dd class="col-sm-9">${value}</dd>`;
+          }).join('');
+          console.log(html);
+          $(target).html(html);
+        })
+      }
     </script>
 {% endblock %}
