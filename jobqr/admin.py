@@ -1,5 +1,6 @@
 from django.contrib import admin
-from jobqr.models import Job, TrackedItem
+
+from jobqr.models import Job, TrackedItem, MethodTemplate, Method
 from reversion.admin import VersionAdmin
 
 
@@ -11,6 +12,16 @@ class JobAdmin(admin.ModelAdmin):
 @admin.register(TrackedItem)
 class TrackedItemAdmin(VersionAdmin):
     list_display = ('name', 'job')
+
+
+@admin.register(Method)
+class MethodAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(MethodTemplate)
+class MethodTemplateAdmin(admin.ModelAdmin):
+    pass
 
 
 admin.site.site_header = "QR-toolkit admin"

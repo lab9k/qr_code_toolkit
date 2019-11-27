@@ -35,3 +35,12 @@ class TrackedItem(models.Model):
 
     def __str__(self):
         return f'{self.name}'
+
+
+class MethodTemplate(models.Model):
+    name = models.CharField(max_length=255, blank=False, null=False)
+    methods = models.ManyToManyField(to='Method', related_name='template', related_query_name='template')
+
+
+class Method(models.Model):
+    name = models.CharField(max_length=255, blank=False, null=False)
