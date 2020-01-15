@@ -43,6 +43,8 @@ THIRD_PARTY_APPS = [
     'debug_toolbar'
 ]
 CUSTOM_APPS = [
+    'cloudinary',
+    'cloudinary_storage',
     'jobqr',
 ]
 

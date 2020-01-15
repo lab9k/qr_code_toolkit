@@ -16,6 +16,11 @@ class Job(models.Model):
         return f'{self.name}'
 
 
+class JobImage(models.Model):
+    image = models.ImageField(upload_to='jobs', null=True, default=None)
+    job = models.ForeignKey(to=Job, on_delete=models.CASCADE, related_name='images')
+
+
 class TrackedItem(models.Model):
     item_id = models.IntegerField(blank=False, primary_key=True, unique=True, auto_created=False)
     name = models.CharField(max_length=255)

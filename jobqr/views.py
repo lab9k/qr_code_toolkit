@@ -4,7 +4,7 @@ from django.views.generic import DetailView, ListView, View, RedirectView, Templ
 import json
 
 from jobqr.forms import QrForm, RegisterForm
-from jobqr.models import Job, TrackedItem
+from jobqr.models import Job, TrackedItem, JobImage
 
 
 class JobListView(ListView):
@@ -100,3 +100,20 @@ class HistoryView(DetailView):
     model = TrackedItem
     context_object_name = 'item'
     template_name = 'jobqr/item_history.html'
+
+
+class AddPictureView(RedirectView):
+    pattern_name = 'job_detail'
+    query_string = True
+    permanent = True
+
+    def post(self, request, *args, **kwargs):
+        print(request.FILES)
+        job_id = kwargs.get('pk')
+        print(job_id)
+        job = Job.objects.get(pk=job_id)
+        print(request.FILES)
+        for file in request.FILES.getlist('images'):
+            img = JobImage(image=file, job=job)
+            img.save()
+        return self.get(request, *args, **kwargs)
