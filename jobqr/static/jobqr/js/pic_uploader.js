@@ -27,7 +27,7 @@ const Uploader = {
     });
     items.append('csrfmiddlewaretoken', this.csrfInput[0].value);
     console.log(items.getAll('images'));
-    fetch(url, {method: 'POST', body: items}).then()
+    fetch(url, {method: 'POST', body: items}).then(() => (location.reload()))
   }
 };
 
