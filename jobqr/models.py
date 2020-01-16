@@ -17,7 +17,7 @@ class Job(models.Model):
 
 
 class JobImage(models.Model):
-    image = models.ImageField(upload_to='jobs', null=True, default=None)
+    image = models.ImageField(upload_to='jobs/', blank=True, default=None)
     job = models.ForeignKey(to=Job, on_delete=models.CASCADE, related_name='images')
 
 

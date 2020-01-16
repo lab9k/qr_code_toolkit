@@ -28,27 +28,21 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-DJANGO_APPS = [
+INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.admin'
-]
-THIRD_PARTY_APPS = [
+    'django.contrib.admin',
+    'cloudinary',
+    'cloudinary_storage',
     'location_field.apps.DefaultConfig',
     'rest_framework',
     'reversion',
-    'debug_toolbar'
-]
-CUSTOM_APPS = [
-    'cloudinary',
-    'cloudinary_storage',
+    'debug_toolbar',
     'jobqr',
 ]
-
-INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + CUSTOM_APPS
 
 MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
