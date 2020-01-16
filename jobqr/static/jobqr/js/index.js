@@ -101,6 +101,9 @@ const App = {
     this.addFormListener(null, item.value);
   },
   detectQr() {
+    $('html, body').animate({
+      scrollTop: $("#scanner-cv").offset().top
+    }, 1000);
     this.addSection.hidden = false;
     const video = document.createElement("video");
     const canvasElement = document.getElementById("canvas");

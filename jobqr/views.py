@@ -108,11 +108,8 @@ class AddPictureView(RedirectView):
     permanent = True
 
     def post(self, request, *args, **kwargs):
-        print(request.FILES)
         job_id = kwargs.get('pk')
-        print(job_id)
         job = Job.objects.get(pk=job_id)
-        print(request.FILES)
         for file in request.FILES.getlist('images'):
             img = JobImage(image=file, job=job)
             img.save()
