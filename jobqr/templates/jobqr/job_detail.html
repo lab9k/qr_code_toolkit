@@ -34,14 +34,12 @@
             </table>
         </div>
         <div class="row">
-            <p class="col-md-12">Scan Items voor registratie/update</p>
-            <button id="start_adding_items" class="btn btn-primary">Scan Items</button>
-            <button id="add-pictures" class="btn btn-secondary ml-3">Add pictures</button>
+            <button id="start_adding_items" class="btn btn-primary btn-lg">Scan Items</button>
+            <button id="add-pictures" class="btn btn-secondary ml-3 btn-lg">Add pictures</button>
         </div>
         <div class="row mt-3">
             <div class="row">
                 <div id="pictures" style="width: 100%; display:flex;flex-direction: row" class="d-none">
-
                     <div style="flex-grow: 1;" class="pr-3">
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" id="customFile" accept="image/*;capture=camera"
@@ -55,11 +53,13 @@
                 </div>
             </div>
             <div class="row">
-                {% for image in job.images.all %}
-                    <div class="col-xs-2 col-lg-2 col-md-2">
-                        <img src="{{ image.image.url }}" alt="image of job: {{ job.name }}" class="img-fluid">
-                    </div>
-                {% endfor %}
+                <div id="uploaded_images" class="d-none">
+                    {% for image in job.images.all %}
+                        <div class="col-xs-2 col-lg-2 col-md-2">
+                            <img src="{{ image.image.url }}" alt="image of job: {{ job.name }}" class="img-fluid">
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
         <div class="row">

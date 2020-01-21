@@ -74,7 +74,7 @@ const App = {
                 <td>${item.pk}</td>
                 <td>${item.name}</td>
                 <td>${lastUpdate}</td>
-                <td><input type="checkbox" class="form-check-input" disabled ${item.missing ? 'checked' : ''}></td>
+                <td class="text-center"><input type="checkbox" class="form-check-input" disabled ${item.missing ? 'checked' : ''}></td>
                 <td><button type="button" class="btn btn-warning" onclick="App.reportMissing(this)" value="${item.pk}">${item.missing ? 'Report found' : 'Report missing'}</button></td>
               </tr>`;
     }).join('');

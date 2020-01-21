@@ -1,7 +1,7 @@
 const Uploader = {
   init() {
     this.startBtn = $('#add-pictures');
-    this.uploader = $('#pictures');
+    this.uploader = $('#pictures, #uploaded_images');
     this.uploadBtn = $('#upload-pictures');
     this.files = $('#customFile');
     this.csrfInput = document.getElementsByName("csrfmiddlewaretoken");
