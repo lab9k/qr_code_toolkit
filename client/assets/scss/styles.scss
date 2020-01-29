@@ -1,0 +1,8 @@
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans');
+
+$family-sans-serif: "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+$primary: rgb(0, 92, 134);
+
+@import "~bulma/sass/utilities/_all";
+@import "~bulma";
+@import "~buefy/src/scss/buefy";
