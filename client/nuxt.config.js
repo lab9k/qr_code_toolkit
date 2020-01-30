@@ -23,9 +23,7 @@ export default {
   /*
    ** Global CSS
    */
-  css: [
-    '@/assets/scss/styles.scss'
-  ],
+  css: ['@/assets/scss/styles.scss'],
   /*
    ** Plugins to load before mounting the App
    */
@@ -60,5 +58,14 @@ export default {
      ** You can extend webpack config here
      */
     extend(config, ctx) {}
+  },
+  /*
+   ** PWA config
+   ** See https://pwa.nuxtjs.org/
+   */
+  pwa: {
+    manifest: {
+      name: 'QR toolkit scanner'
+    }
   }
 }

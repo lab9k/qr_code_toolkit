@@ -90,3 +90,4 @@ media
 
 # Client
 /client/node_modules/
+/client/sw.*
