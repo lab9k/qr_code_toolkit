@@ -7,6 +7,10 @@ $primary: rgb(0, 92, 134);
 @import "~bulma";
 @import "~buefy/src/scss/buefy";
 
+html {
+  overflow-y: auto;
+}
+
 $sizeUnit: rem;
 $marginKey: 'm';
 $paddingKey: 'p';
@@ -31,6 +35,7 @@ $positions: (
 
 @function sizeValue($key, $value) {
   $condition: $key == 'none' or $key == 'auto';
+  //@return '0px';
   @return if($condition, $value, $value + $sizeUnit);
 }
 

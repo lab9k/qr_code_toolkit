@@ -14,10 +14,11 @@
     "test": "jest"
   },
   "dependencies": {
+    "@nuxtjs/axios": "^5.3.6",
+    "@nuxtjs/pwa": "^3.0.0-0",
     "nuxt": "^2.0.0",
     "nuxt-buefy": "^0.3.2",
-    "@nuxtjs/axios": "^5.3.6",
-    "@nuxtjs/pwa": "^3.0.0-0"
+    "vue-qrcode-reader": "^2.1.1"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^1.0.1",

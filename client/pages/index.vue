@@ -4,11 +4,17 @@
     <div
       style="border: 1px solid grey; height: 320px; background-color: black;"
     ></div>
+    <client-only>
+      <scanner />
+    </client-only>
   </section>
 </template>
 
 <script>
 export default {
-  name: 'HomePage'
+  name: 'HomePage',
+  components: {
+    scanner: () => import('@/components/client-only/Scanner')
+  }
 }
 </script>
