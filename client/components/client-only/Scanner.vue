@@ -1,10 +1,16 @@
 <template>
   <div>
-    <p class="error">{{ error }}</p>
-    <p class="decode-result">
+    <p v-if="result" class="decode-result">
       Last result: <b>{{ result }}</b>
     </p>
-    <qrcode-stream @decode="onDecode" @init="onInit" />
+    <qrcode-stream @decode="onDecode" @init="onInit">
+      <div v-if="loading" class="loading-indicator">
+        Loading...
+      </div>
+      <div v-if="error" class="error-indicator has-text-danger">
+        {{ error }}
+      </div>
+    </qrcode-stream>
   </div>
 </template>
 
@@ -19,7 +25,8 @@ export default {
   data() {
     return {
       result: null,
-      error: null
+      error: null,
+      loading: false
     }
   },
   methods: {
@@ -27,6 +34,7 @@ export default {
       this.result = result
     },
     async onInit(promise) {
+      this.loading = true
       try {
         await promise
       } catch (error) {
@@ -43,8 +51,18 @@ export default {
         } else if (error.name === 'StreamApiNotSupportedError') {
           this.error = 'ERROR: Stream API is not supported in this browser'
         }
+      } finally {
+        this.loading = false
       }
     }
   }
 }
 </script>
+<style>
+.loading-indicator,
+.error-indicator {
+  font-weight: bold;
+  font-size: 2rem;
+  text-align: center;
+}
+</style>
