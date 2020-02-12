@@ -13,7 +13,8 @@ urlpatterns = [
     ])),
     # path('', include('jobqr.urls')),
     # path('api/', include(router.urls)),
-    path('api/v2/', include('qr_kit.urls'))
+    path('api/v2/', include('roads_qr_kit.urls')),
+    path('api/v3/', include('qr_kit.urls'))
 ]
 
 if settings.DEBUG:

@@ -1,25 +1,19 @@
 from django.contrib import admin
-from reversion.admin import VersionAdmin
-
-from qr_kit.models import JobImage, Job, TrackedItem
+from qr_kit.models import Category, InputValue, QrCode
 
 
-class ImageInline(admin.StackedInline):
-    model = JobImage
+class InputValueInline(admin.StackedInline):
+    model = InputValue
     extra = 1
 
 
-@admin.register(Job)
-class JobAdmin(admin.ModelAdmin):
-    list_display = ('name', 'current_items')
-    inlines = [ImageInline]
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    inlines = [InputValueInline]
+    list_display = ('name',)
 
 
-@admin.register(TrackedItem)
-class TrackedItemAdmin(VersionAdmin):
-    list_display = ('name', 'job')
-
-
-admin.site.site_header = "QR-toolkit admin"
-admin.site.site_title = "Qr-toolkit admin portal"
-admin.site.index_title = "Welcome to the Qr-toolkit admin page"
+@admin.register(QrCode)
+class QrCodeAdmin(admin.ModelAdmin):
+    fields = ('category', 'uuid', 'values')
+    readonly_fields = ('uuid', 'values')

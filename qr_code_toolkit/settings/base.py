@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'corsheaders',
     'jobqr',
+    'roads_qr_kit',
     'qr_kit'
 ]
 

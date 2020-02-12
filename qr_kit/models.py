@@ -1,40 +1,40 @@
+import uuid
 from django.db import models
+from picklefield.fields import PickledObjectField
 
-from location_field.models.plain import PlainLocationField
-from reversion.models import Version
+from qr_kit.util import HTTP_METHOD_CHOICES, VALUE_TYPE_CHOICES
 
 
-class Job(models.Model):
+class InputValue(models.Model):
+    name = models.CharField(max_length=50)
+    type = models.CharField(max_length=255, choices=VALUE_TYPE_CHOICES)
+    parameter_name = models.CharField(max_length=255)
+    required = models.BooleanField()
+
+    category = models.ForeignKey(to='Category', on_delete=models.CASCADE, related_name='values_to_fill')
+
+
+class Category(models.Model):
     name = models.CharField(max_length=255)
+
+    endpoint = models.URLField()
+    method = models.CharField(max_length=16, choices=HTTP_METHOD_CHOICES)
+    success_url = models.URLField(blank=True, null=True)
+
+    @property
+    def is_instant_redirect(self) -> bool:
+        # TODO: define this property
+        return False
 
     def __str__(self):
         return f'{self.name}'
 
-
-class JobImage(models.Model):
-    image = models.ImageField(upload_to='img/jobs/', blank=True)
-    job = models.ForeignKey(to=Job, on_delete=models.CASCADE, related_name='images')
+    class Meta:
+        verbose_name_plural = "Categories"
 
 
-class TrackedItem(models.Model):
-    item_id = models.IntegerField(blank=False,
-                                  primary_key=True,
-                                  unique=True,
-                                  auto_created=True)
-    job = models.ForeignKey(to='Job',
-                            on_delete=models.SET_NULL,
-                            blank=True,
-                            null=True,
-                            related_name='current_items')
-    name = models.CharField(max_length=255)
-    location = PlainLocationField(based_fields=['location'],
-                                  default='51.0538286,3.7250121')
-    is_in_use = models.BooleanField(default=False)
-    missing = models.BooleanField(default=False)
-    last_update = models.DateTimeField(auto_now=True, auto_now_add=False)
+class QrCode(models.Model):
+    uuid = models.UUIDField(default=uuid.uuid4, editable=True)
 
-    def __str__(self):
-        return f'{self.name}'
-
-    def get_history(self):
-        return Version.objects.get_for_object(self)
+    category = models.ForeignKey(to=Category, on_delete=models.CASCADE, related_name='codes')
+    values = PickledObjectField(compress=True, editable=True, blank=True, default='')
