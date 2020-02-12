@@ -1,7 +1,9 @@
 <template>
   <section class="section">
     <h2 class="title is-3 has-text-grey">
-      "Just start <b-icon icon="rocket" size="is-large" />"
+      "Just start
+      <b-icon icon="rocket" size="is-large" />
+      "
     </h2>
     <h3 class="subtitle is-6 has-text-grey">
       Author:
@@ -11,3 +13,11 @@
     </h3>
   </section>
 </template>
+<script>
+export default {
+  async mounted() {
+    const res = await this.$axios.$get('/job')
+    console.log(res)
+  }
+}
+</script>
