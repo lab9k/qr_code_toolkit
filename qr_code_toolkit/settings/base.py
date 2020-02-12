@@ -41,10 +41,13 @@ INSTALLED_APPS = [
     'rest_framework',
     'reversion',
     'debug_toolbar',
+    'corsheaders',
     'jobqr',
+    'qr_kit'
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
