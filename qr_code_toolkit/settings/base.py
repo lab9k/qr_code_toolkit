@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'reversion',
     'debug_toolbar',
     'jobqr',
+    'qr_kit'
 ]
 
 MIDDLEWARE = [

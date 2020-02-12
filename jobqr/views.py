@@ -1,7 +1,6 @@
 from django.forms.models import model_to_dict
 from django.http import JsonResponse
 from django.views.generic import DetailView, ListView, View, RedirectView, TemplateView
-import json
 
 from jobqr.forms import QrForm, RegisterForm
 from jobqr.models import Job, TrackedItem, JobImage
@@ -58,7 +57,7 @@ class JobDetailView(DetailView):
 class HomeView(RedirectView):
     pattern_name = 'job_list'
     query_string = True
-    permanent = True
+    permanent = False
 
 
 class RegisterView(TemplateView):

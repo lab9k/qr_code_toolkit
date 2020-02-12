@@ -12,7 +12,7 @@ class ItemViewSet(ModelViewSet):
 
     def get_queryset(self):
         only_missing = self.request.query_params.get('missing')
-        if only_missing is '1':
+        if only_missing == '1':
             return TrackedItem.objects.filter(missing=True)
         else:
             return TrackedItem.objects.all()
