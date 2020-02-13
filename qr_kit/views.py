@@ -54,3 +54,6 @@ class QrCodeView(DetailView, FormMixin):
 
     def form_invalid(self, form):
         return self.render_to_response(context={'form': form})
+
+    def get_success_url(self):
+        return self.get_object().category.success_url
