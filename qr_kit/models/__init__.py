@@ -1,6 +1,7 @@
 import uuid
+
+from qr_kit.models.fields import JSONField
 from django.db import models
-from picklefield.fields import PickledObjectField
 
 from qr_kit.util import HTTP_METHOD_CHOICES, VALUE_TYPE_CHOICES
 
@@ -34,7 +35,7 @@ class Category(models.Model):
 
 
 class QrCode(models.Model):
-    uuid = models.UUIDField(default=uuid.uuid4, editable=True)
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False)
 
     category = models.ForeignKey(to=Category, on_delete=models.CASCADE, related_name='codes')
-    values = PickledObjectField(compress=True, editable=True, blank=True, default='')
+    values = JSONField(default=dict)

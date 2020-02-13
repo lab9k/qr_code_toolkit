@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
-from jobqr.urls import router
+from qr_kit.views import QrCodeView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -14,7 +14,8 @@ urlpatterns = [
     # path('', include('jobqr.urls')),
     # path('api/', include(router.urls)),
     path('api/v2/', include('roads_qr_kit.urls')),
-    path('api/v3/', include('qr_kit.urls'))
+    path('api/v3/', include('qr_kit.urls')),
+    path('qr/<slug:uuid>/', QrCodeView.as_view(), name='qr_code-detail')
 ]
 
 if settings.DEBUG:
