@@ -87,6 +87,7 @@ local_settings.py
 db.sqlite3
 .idea
 media
+venv/
 
 # Client
 /client/node_modules/
