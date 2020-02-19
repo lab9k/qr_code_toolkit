@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
-from qr_kit.views import QrCodeView
+from qr_kit.views import QrCodeView, ReportView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -15,6 +15,7 @@ urlpatterns = [
     # path('api/', include(router.urls)),
     path('api/v2/', include('roads_qr_kit.urls')),
     path('api/v3/', include('qr_kit.urls')),
+    path('reports/', ReportView.as_view(), name='report-list'),
     path('<slug:uuid>/', QrCodeView.as_view(), name='qr_code-detail')
 ]
 

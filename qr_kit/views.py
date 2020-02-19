@@ -1,8 +1,10 @@
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.views.generic import DetailView, FormView
-from django.views.generic.edit import FormMixin
+from django.views.generic import DetailView, FormView, ListView
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import get_object_or_404
+from django.views.generic.edit import FormMixin
+
 from qr_kit.models import QrCode, Category, QrCodeReport
 from qr_kit.forms import DynamicQrForm
 
@@ -66,3 +68,12 @@ class QrCodeView(DetailView, FormMixin):
 
     def get_success_url(self):
         return self.get_object().category.success_url
+
+
+class ReportView(ListView, UserPassesTestMixin):
+    queryset = QrCodeReport.objects.all()
+    template_name = 'qr_kit/report.html'
+    context_object_name = 'reports'
+
+    def test_func(self):
+        return self.request.user.is_superuser
