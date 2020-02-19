@@ -4,6 +4,6 @@ import django_heroku
 django_heroku.settings(locals())
 
 DEBUG = False
-ALLOWED_HOSTS = ['qrcodetoolkit.herokuapp.com']
+ALLOWED_HOSTS = ['qrcodetoolkit.herokuapp.com', 'generic-qr-code-toolkit.herokuapp.com']
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 DEBUG_TOOLBAR_PATCH_SETTINGS = False
