@@ -1,6 +1,4 @@
-from django.urls import reverse
 from rest_framework import serializers
-
 from qr_kit.models import InputValue, Category, QrCode
 
 

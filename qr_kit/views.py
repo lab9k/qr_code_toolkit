@@ -1,4 +1,3 @@
-import json
 from django.views.generic import DetailView, ListView
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import get_object_or_404
@@ -16,39 +15,46 @@ class QrCodeView(DetailView, FormMixin):
     form_class = DynamicQrForm
 
     def get_object(self, queryset=None) -> QrCode:
+        """
+        :return: the QrCode object this view points to. (according to uuid slug in the resolved url)
+        """
         uuid = self.kwargs.get('uuid')
         return get_object_or_404(QrCode, uuid=uuid)
 
     def get_context_data(self, **kwargs):
+        """
+        :return: context, enriched with the current url and a form for this QrCode object.
+        """
         context = super(QrCodeView, self).get_context_data(**kwargs)
         context['qr_url'] = self.request.build_absolute_uri()
         context['form'] = self.get_form()
         return context
 
-    def get(self, request, *args, **kwargs):
-        # noinspection PyAttributeOutsideInit
-        self.object = self.get_object()
-        context = self.get_context_data()
-        return self.render_to_response(context)
-
     def post(self, request, *args, **kwargs):
+        """
+        POST handler for this QrCode object form, will validate the form and handle accordingly.
+        """
         # noinspection PyAttributeOutsideInit
         self.object = self.get_object()
         form = self.get_form()
         if form.is_valid():
-            print('valid')
             return self.form_valid(form)
         else:
-            print('invalid')
             return self.form_invalid(form)
 
     def get_form(self, form_class=None):
+        """
+        Returns a form based on the passed in values
+        """
         obj = self.get_object()
         if self.request.method == 'POST':
             return DynamicQrForm(category=obj.category, data=self.request.POST)
         return DynamicQrForm(category=obj.category, filled_values=obj.values)
 
     def form_valid(self, form):
+        """
+        Handles a valid form, redirects to the QrCode.Category.success_url url
+        """
         # Save submitted form to database
         obj = self.get_object()
 
@@ -64,9 +70,15 @@ class QrCodeView(DetailView, FormMixin):
         return self.render_to_response(context=self.get_context_data())
 
     def form_invalid(self, form):
+        """
+        Handles an invalid form.
+        """
         return self.render_to_response(context=self.get_context_data())
 
     def get_success_url(self):
+        """
+        :returns success_url for the current QrCode object
+        """
         return self.get_object().category.success_url
 
 
