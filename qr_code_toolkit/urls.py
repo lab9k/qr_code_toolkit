@@ -3,6 +3,8 @@ from django.contrib import admin
 from django.conf import settings
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
+from django.views.generic import RedirectView
+
 from qr_kit.views import QrCodeView, ReportView
 
 urlpatterns = [
@@ -13,6 +15,7 @@ urlpatterns = [
     ])),
     # path('', include('jobqr.urls')),
     # path('api/', include(router.urls)),
+    path('', RedirectView.as_view(url='/api/v3', permanent=False)),
     path('api/v2/', include('roads_qr_kit.urls')),
     path('api/v3/', include('qr_kit.urls')),
     path('reports/', ReportView.as_view(), name='report-list'),
