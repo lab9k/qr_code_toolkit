@@ -1,3 +1,4 @@
+{% load jsonify %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -10,7 +11,7 @@
 <body>
 <div class="container">
     {% for report in reports %}
-        <p><span>Code: <b>{{ report.qr_code.uuid }}</b>:</span> {{ report.values }}</p>
+        <p><span>Code: <b>{{ report.qr_code.uuid }}</b>:</span> {{ report.values|jsonify }}</p>
     {% endfor %}
 </div>
 </body>

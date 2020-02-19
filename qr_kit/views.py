@@ -1,11 +1,10 @@
-from django.http import HttpResponseRedirect
-from django.urls import reverse
-from django.views.generic import DetailView, FormView, ListView
+import json
+from django.views.generic import DetailView, ListView
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import get_object_or_404
 from django.views.generic.edit import FormMixin
 
-from qr_kit.models import QrCode, Category, QrCodeReport
+from qr_kit.models import QrCode, QrCodeReport
 from qr_kit.forms import DynamicQrForm
 
 
@@ -55,6 +54,7 @@ class QrCodeView(DetailView, FormMixin):
 
         pre_filled_values = obj.values
         form_values = form.cleaned_data
+        # make sure pre_filled_values from qr_code are not tampered with
         form_values.update(pre_filled_values)
 
         report = QrCodeReport(values=form_values, qr_code=obj)
@@ -76,4 +76,5 @@ class ReportView(ListView, UserPassesTestMixin):
     context_object_name = 'reports'
 
     def test_func(self):
+        # Check if user is logged in as a superuser
         return self.request.user.is_superuser
