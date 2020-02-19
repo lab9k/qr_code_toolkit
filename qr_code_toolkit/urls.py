@@ -15,7 +15,7 @@ urlpatterns = [
     # path('api/', include(router.urls)),
     path('api/v2/', include('roads_qr_kit.urls')),
     path('api/v3/', include('qr_kit.urls')),
-    path('qr/<slug:uuid>/', QrCodeView.as_view(), name='qr_code-detail')
+    path('<slug:uuid>/', QrCodeView.as_view(), name='qr_code-detail')
 ]
 
 if settings.DEBUG:

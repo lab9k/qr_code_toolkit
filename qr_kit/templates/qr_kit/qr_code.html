@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -6,14 +7,29 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'qr_kit/qr_detail.css' %}">
+
 </head>
 <body>
-{{ qr_code }}
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">submit</button>
-</form>
+<div class="container">
+    <div class="qr_code">
+        <img src="http://qrcodeservice.herokuapp.com/?query={{ qr_url }}" alt="qr code for this page">
+    </div>
+    <form method="post" id="qr_form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="buttons">
+            <div class="button">
+                <button type="submit">Submit</button>
+            </div>
+            <div class="button">
+                <button type="reset">Reset</button>
+            </div>
+        </div>
+
+    </form>
+</div>
+
 
 </body>
 </html>

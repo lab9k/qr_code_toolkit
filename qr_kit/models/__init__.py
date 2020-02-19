@@ -39,3 +39,11 @@ class QrCode(models.Model):
 
     category = models.ForeignKey(to=Category, on_delete=models.CASCADE, related_name='codes')
     values = JSONField(default=dict)
+
+
+class QrCodeReport(models.Model):
+    qr_code = models.ForeignKey(to=QrCode,
+                                on_delete=models.SET_NULL,
+                                related_name='reports',
+                                null=True)
+    values = JSONField(default=dict)
