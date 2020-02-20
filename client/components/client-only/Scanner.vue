@@ -32,6 +32,7 @@ export default {
   methods: {
     onDecode(result) {
       this.result = result
+      this.$emit('result', result)
     },
     async onInit(promise) {
       this.loading = true

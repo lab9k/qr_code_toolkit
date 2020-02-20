@@ -33,7 +33,9 @@ class JobImageSerializer(serializers.ModelSerializer):
 class JobSerializer(serializers.ModelSerializer):
     current_items = TrackedItemSerializer(many=True, required=False)
     images = JobImageSerializer(many=True, required=False)
+    url = serializers.HyperlinkedIdentityField(view_name='job-detail')
 
     class Meta:
         model = Job
         fields = '__all__'
+        read_only_fields = ('id',)

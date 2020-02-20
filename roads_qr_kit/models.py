@@ -12,7 +12,7 @@ class Job(models.Model):
 
 
 class JobImage(models.Model):
-    image = models.ImageField(upload_to='img/jobs/', blank=True)
+    image = models.ImageField(upload_to='img/jobs/', blank=True, null=True)
     job = models.ForeignKey(to=Job, on_delete=models.CASCADE, related_name='images')
 
 
@@ -20,7 +20,7 @@ class TrackedItem(models.Model):
     item_id = models.IntegerField(blank=False,
                                   primary_key=True,
                                   unique=True,
-                                  auto_created=True)
+                                  auto_created=True, editable=False)
     job = models.ForeignKey(to='Job',
                             on_delete=models.SET_NULL,
                             blank=True,
