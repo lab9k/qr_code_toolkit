@@ -5,6 +5,7 @@ from django.views.generic.edit import FormMixin
 
 from qr_kit.models import QrCode, QrCodeReport
 from qr_kit.forms import DynamicQrForm
+from qr_kit.util import redirect_params
 
 
 class QrCodeView(DetailView, FormMixin):
@@ -14,21 +15,21 @@ class QrCodeView(DetailView, FormMixin):
     success_url = ''
     form_class = DynamicQrForm
 
-    def get_object(self, queryset=None) -> QrCode:
+    def get(self, request, *args, **kwargs):
         """
-        :return: the QrCode object this view points to. (according to uuid slug in the resolved url)
+        get the qr detail page. This view redirects to an external form, or builds a form with the values defined in
+        it's category combined with the default values from the qr_code.
         """
-        uuid = self.kwargs.get('uuid')
-        return get_object_or_404(QrCode, uuid=uuid)
-
-    def get_context_data(self, **kwargs):
-        """
-        :return: context, enriched with the current url and a form for this QrCode object.
-        """
-        context = super(QrCodeView, self).get_context_data(**kwargs)
-        context['qr_url'] = self.request.build_absolute_uri()
-        context['form'] = self.get_form()
-        return context
+        # noinspection PyAttributeOutsideInit
+        self.object = self.get_object()
+        if self.object.category.redirect_to_form_with_query_params:
+            # redirect to form, with query params filled in
+            return redirect_params(url=self.object.category.endpoint, params={
+                **self.object.values,
+                'next': self.object.category.success_url
+            })
+        else:
+            return super(QrCodeView, self).get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         """
@@ -41,6 +42,13 @@ class QrCodeView(DetailView, FormMixin):
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
+
+    def get_object(self, queryset=None) -> QrCode:
+        """
+        :return: the QrCode object this view points to. (according to uuid slug in the resolved url)
+        """
+        uuid = self.kwargs.get('uuid')
+        return get_object_or_404(QrCode, uuid=uuid)
 
     def get_form(self, form_class=None):
         """
