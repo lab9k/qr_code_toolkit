@@ -33,16 +33,15 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
     'django.contrib.admin',
-    'cloudinary',
-    'cloudinary_storage',
+    'django.contrib.staticfiles',
     'location_field.apps.DefaultConfig',
     'rest_framework',
     'reversion',
     'debug_toolbar',
     'corsheaders',
     'jobqr',
+    'roads_qr_kit',
     'qr_kit'
 ]
 

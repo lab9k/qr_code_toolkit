@@ -92,3 +92,4 @@ venv/
 # Client
 /client/node_modules/
 /client/sw.*
+/venv/

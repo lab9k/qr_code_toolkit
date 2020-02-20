@@ -1,39 +1,27 @@
 from rest_framework import serializers
-from reversion.models import Version
-
-from qr_kit.models import TrackedItem, Job, JobImage
+from qr_kit.models import InputValue, Category, QrCode
 
 
-class VersionSerializer(serializers.ModelSerializer):
+class InputValueSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Version
+        model = InputValue
         fields = '__all__'
 
 
-class TrackedItemSerializer(serializers.ModelSerializer):
-    history = serializers.SerializerMethodField(method_name='get_history')
-    item_id = serializers.IntegerField(read_only=True)
-
-    # noinspection PyMethodMayBeStatic
-    def get_history(self, obj):
-        serializer = VersionSerializer(obj.get_history(), many=True)
-        return serializer.data
+class CategorySerializer(serializers.ModelSerializer):
+    values_to_fill = InputValueSerializer(many=True, required=False)
 
     class Meta:
-        model = TrackedItem
+        model = Category
         fields = '__all__'
 
 
-class JobImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = JobImage
-        fields = '__all__'
-
-
-class JobSerializer(serializers.ModelSerializer):
-    current_items = TrackedItemSerializer(many=True, required=False)
-    images = JobImageSerializer(many=True, required=False)
+class QrCodeSerializer(serializers.HyperlinkedModelSerializer):
+    values = serializers.JSONField()
+    scan_url = serializers.HyperlinkedIdentityField(view_name='qr_code-detail', lookup_url_kwarg='uuid',
+                                                    lookup_field='uuid', read_only=True)
 
     class Meta:
-        model = Job
-        fields = '__all__'
+        model = QrCode
+        fields = ('id', 'values', 'scan_url', 'uuid', 'category', 'url')
+        read_only_fields = ['uuid', 'id', 'scan_url', 'url']

@@ -1,8 +1,8 @@
 from rest_framework import routers
-from qr_kit import viewsets
+from qr_kit.viewsets import CategoryViewSet, QrCodeViewSet
 
 router = routers.DefaultRouter()
-router.register(r'job', viewsets.JobViewSet)
-router.register(r'item', viewsets.ItemViewSet)
+router.register('category', CategoryViewSet)
+router.register('code', QrCodeViewSet)
 
 urlpatterns = router.urls

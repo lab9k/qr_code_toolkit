@@ -1,0 +1,53 @@
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.qr_code {
+    margin: 0 auto;
+    text-align: center;
+}
+
+#qr_form {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#qr_form > p {
+    width: 50%;
+    text-align: center;
+}
+
+#qr_form .buttons {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+
+}
+
+#qr_form .buttons .button {
+    margin-right: 16px;
+}
+
+
+#qr_form .buttons .button button {
+    border-radius: 4px;
+    padding: 16px 32px;
+    color: #e3f2fd;
+    text-decoration: none;
+    text-shadow: 0 1px 0 #79818b;
+    font-size: 16px;
+    cursor: pointer;
+    font-family: Times, serif;
+}
+
+#qr_form .buttons .button button[type="reset"] {
+    background-color: red;
+}
+
+#qr_form .buttons .button button[type="submit"] {
+    background-color: green;
+}
