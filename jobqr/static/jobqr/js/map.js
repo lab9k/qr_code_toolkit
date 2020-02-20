@@ -46,7 +46,7 @@ const MapApp = {
     });
   },
   fetchItems() {
-    let url = '/api/device';
+    let url = '/old/api/device';
     if (window.location.pathname.includes('missing')) {
       url += '/?missing=1'
     }
@@ -66,7 +66,7 @@ const MapApp = {
 
         const template = `<p><b>Naam:</b> ${item.name}</p>
                         <p><b>Laatste update:</b> ${lastUpdate.format('LL')}</p>`;
-        const historyButton = `<p><a href="/device/${item.pk}/history">Go to history</a></p>`;
+        const historyButton = `<p><a href="/old/device/${item.pk}/history">Go to history</a></p>`;
         marker.bindPopup(template + historyButton);
       }
     });

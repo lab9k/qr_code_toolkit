@@ -58,7 +58,7 @@ const App = {
       });
   },
   initCurrentItems() {
-    const url = '/api' + window.location.pathname;
+    const url = '/old/api' + window.location.pathname;
 
     return fetch(url).then(res => res.json()).then(({current_items}) => {
       this.updateCurrentItems(current_items);
@@ -92,7 +92,7 @@ const App = {
   reportMissing(item) {
     const data = new FormData();
     data.append('csrfmiddlewaretoken', this.csrfInput[0].value);
-    fetch(`/device/${item.value}/missing/`, {
+    fetch(`/old/device/${item.value}/missing/`, {
       method: 'POST',
       body: data
     }).then(() => App.initCurrentItems()).catch(err => console.log(err))
