@@ -21,11 +21,7 @@ class Category(models.Model):
     endpoint = models.URLField()
     method = models.CharField(max_length=16, choices=HTTP_METHOD_CHOICES)
     success_url = models.URLField(blank=True, null=True)
-
-    @property
-    def is_instant_redirect(self) -> bool:
-        # TODO: define this property
-        return False
+    redirect_to_form_with_query_params = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.name}'
