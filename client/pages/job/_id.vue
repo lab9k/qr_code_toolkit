@@ -79,9 +79,14 @@ export default {
     this[actionTypes.FETCH_ALL_JOBS]()
   },
   methods: {
-    ...mapActions([actionTypes.FETCH_ALL_JOBS, actionTypes.TRACK_ITEM]),
+    ...mapActions([
+      actionTypes.FETCH_ALL_JOBS,
+      actionTypes.TRACK_ITEM,
+      actionTypes.UPDATE_ITEM
+    ]),
     reportMissing(item) {
-      console.log(item)
+      const report = { ...item, missing: !item.missing }
+      this[actionTypes.UPDATE_ITEM](report)
     },
     addItem(ev) {
       const isAlreadyTrackedInJob = this.job.current_items.find(

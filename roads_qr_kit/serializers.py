@@ -1,3 +1,4 @@
+import json
 from rest_framework import serializers
 from reversion.models import Version
 
@@ -5,6 +6,12 @@ from roads_qr_kit.models import TrackedItem, Job, JobImage
 
 
 class VersionSerializer(serializers.ModelSerializer):
+    serialized_data = serializers.SerializerMethodField(method_name='get_serialized_data')
+
+    # noinspection PyMethodMayBeStatic
+    def get_serialized_data(self, obj):
+        return json.loads(obj.serialized_data)
+
     class Meta:
         model = Version
         fields = '__all__'

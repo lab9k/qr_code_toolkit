@@ -58,15 +58,16 @@ const App = {
       });
   },
   initCurrentItems() {
-    const url = '/old/api' + window.location.pathname;
-
+    const path = window.location.pathname;
+    const urlArray = path.split('/');
+    urlArray.splice(2, 0, 'api');
+    const url = urlArray.join('/');
     return fetch(url).then(res => res.json()).then(({current_items}) => {
       this.updateCurrentItems(current_items);
     });
   },
   updateCurrentItems(items) {
     this.currentItems = items;
-    console.log(items);
     this.currentItemsUl.innerHTML = this.currentItems.map(item => {
       const updateBtn = `<td><button type="button" class="btn btn-primary" onclick="App.updateItem(this)" value="${item.pk}">Update</button></td>`;
       const lastUpdate = dayjs(item.last_update, {locale: 'nl-be'}).format('DD/MM/YYYY HH:mm:ss');
