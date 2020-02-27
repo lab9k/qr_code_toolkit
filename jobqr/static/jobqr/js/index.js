@@ -159,9 +159,11 @@ const App = {
           // outputData.innerText = code.data;
           // App.qrLinkInput.setAttribute('value', code.data);
           const qrUrl = new URL(code.data);
-          const id = qrUrl.pathname.match(/[0-9]+/);
-
-          fetch(`/api/device/${id}`).then(res => res.json()).then(App.initForm);
+          const id = qrUrl.pathname.match(/\/[0-9]+\//);
+          console.log(id)
+          const idNum = id[0].match(/[0-9]+/);
+          console.log(idNum)
+          fetch(`/old/api/device/${idNum}`).then(res => res.json()).then(App.initForm);
           return;
         } else {
           outputMessage.hidden = false;
