@@ -54,7 +54,10 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: 'http://localhost:8000/api/v2'
+    baseURL:
+      process.env.NODE_ENV === 'production'
+        ? 'https://qrcodetoolkit.herokuapp.com/api/v2'
+        : 'http://localhost:8000/api/v2'
   },
   /*
    ** Build configuration
