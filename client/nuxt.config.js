@@ -76,5 +76,9 @@ export default {
     manifest: {
       name: 'QR toolkit scanner'
     }
+  },
+
+  generate: {
+    fallback: true
   }
 }
