@@ -17,10 +17,9 @@ class JobImage(models.Model):
 
 
 class TrackedItem(models.Model):
-    item_id = models.IntegerField(blank=False,
-                                  primary_key=True,
-                                  unique=True,
-                                  auto_created=True)
+    item_id = models.AutoField(
+        primary_key=True,
+    )
     job = models.ForeignKey(to='Job',
                             on_delete=models.SET_NULL,
                             blank=True,
