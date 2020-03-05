@@ -12,6 +12,7 @@
       :is-modal-visible="modalVisible"
       :item="item"
       @confirm="confirm"
+      v-if="!registering"
     />
   </div>
 </template>
@@ -28,6 +29,13 @@ export default {
     ScannedItemModal,
     QrcodeStream
   },
+  props: {
+    registering: {
+      required: false,
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     return {
       result: null,
@@ -40,12 +48,15 @@ export default {
   methods: {
     onDecode(result) {
       this.result = result
-      const id = result.substr(result.length - 2, 1)
-      this.$store.dispatch(actionTypes.FETCH_ITEM, id).then((item) => {
-        this.item = item
-        this.modalVisible = true
-      })
-      //
+      const id = parseInt(result.match(/\/([0-9]+)\//)[1], 10)
+      if (this.registering === true) {
+        this.$emit('result', id)
+      } else {
+        this.$store.dispatch(actionTypes.FETCH_ITEM, id).then((item) => {
+          this.item = item
+          this.modalVisible = true
+        })
+      }
     },
     async onInit(promise) {
       this.loading = true

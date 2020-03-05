@@ -14,6 +14,9 @@
           <b-navbar-item :to="{ path: '/map' }" tag="router-link">
             <b-icon icon="map-marker" size="is-medium" />
           </b-navbar-item>
+          <b-navbar-item :to="{ path: '/register' }" tag="router-link">
+            <b-icon icon="plus-circle" size="is-medium" />
+          </b-navbar-item>
         </template>
       </b-navbar>
     </header>

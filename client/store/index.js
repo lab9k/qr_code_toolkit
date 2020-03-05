@@ -2,7 +2,8 @@ export const actionTypes = {
   FETCH_ALL_JOBS: 'fetch_all_jobs',
   TRACK_ITEM: 'track_item',
   UPDATE_ITEM: 'update_item',
-  FETCH_ITEM: 'fetch_item'
+  FETCH_ITEM: 'fetch_item',
+  REGISTER_ITEM: 'register_item'
 }
 export const mutationTypes = {
   UPDATE_JOB_LIST: 'update_job_list',
@@ -45,7 +46,18 @@ export const actions = {
     try {
       res = await this.$axios.$get(url)
     } catch (e) {
-      res = e
+      res = undefined
+    }
+    return res
+  },
+  async [actionTypes.REGISTER_ITEM]({ commit }, { id, name }) {
+    const url = '/item/register/'
+    let res = null
+    try {
+      res = await this.$axios.$post(url, { item_id: id, name })
+    } catch (e) {
+      console.error(e.message)
+      return e
     }
     return res
   }
