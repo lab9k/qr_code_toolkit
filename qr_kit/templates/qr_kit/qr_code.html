@@ -12,9 +12,6 @@
 </head>
 <body>
 <div class="container">
-    <div class="qr_code">
-        <img src="http://qrcodeservice.herokuapp.com/?query={{ qr_url }}" alt="qr code for this page">
-    </div>
     <form method="post" id="qr_form">
         {% csrf_token %}
         {{ form.as_p }}

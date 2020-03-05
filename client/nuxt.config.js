@@ -46,14 +46,18 @@ export default {
     'nuxt-buefy',
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/pwa'
+    '@nuxtjs/pwa',
+    'nuxt-leaflet'
   ],
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: 'http://localhost:8000/api/v2'
+    baseURL:
+      process.env.NODE_ENV === 'production'
+        ? 'https://qrcodetoolkit.herokuapp.com/api/v2'
+        : 'http://localhost:8000/api/v2'
   },
   /*
    ** Build configuration

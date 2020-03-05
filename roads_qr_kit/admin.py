@@ -6,13 +6,22 @@ from roads_qr_kit.models import JobImage, Job, TrackedItem
 
 class ImageInline(admin.StackedInline):
     model = JobImage
-    extra = 1
+    extra = 0
 
 
 @admin.register(Job)
 class JobAdmin(admin.ModelAdmin):
     list_display = ('name', 'current_items')
     inlines = [ImageInline]
+
+    def current_items(self, obj):
+        if obj.current_items and len(obj.current_items.all()) > 0:
+            items = [str(x) for x in obj.current_items.all()]
+            return ', '.join(items)
+        else:
+            return 'Not available'
+
+    current_items.short_description = 'Currently Tracked Items'
 
 
 @admin.register(TrackedItem)

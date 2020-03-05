@@ -1,3 +1,4 @@
+import json
 from rest_framework import serializers
 from reversion.models import Version
 
@@ -5,13 +6,19 @@ from roads_qr_kit.models import TrackedItem, Job, JobImage
 
 
 class VersionSerializer(serializers.ModelSerializer):
+    serialized_data = serializers.SerializerMethodField(method_name='get_serialized_data', read_only=True)
+
+    # noinspection PyMethodMayBeStatic
+    def get_serialized_data(self, obj):
+        return json.loads(obj.serialized_data)
+
     class Meta:
         model = Version
         fields = '__all__'
 
 
 class TrackedItemSerializer(serializers.ModelSerializer):
-    history = serializers.SerializerMethodField(method_name='get_history')
+    history = serializers.SerializerMethodField(method_name='get_history', read_only=True)
     item_id = serializers.IntegerField(read_only=True)
 
     # noinspection PyMethodMayBeStatic
@@ -33,7 +40,9 @@ class JobImageSerializer(serializers.ModelSerializer):
 class JobSerializer(serializers.ModelSerializer):
     current_items = TrackedItemSerializer(many=True, required=False)
     images = JobImageSerializer(many=True, required=False)
+    url = serializers.HyperlinkedIdentityField(view_name='job-detail')
 
     class Meta:
         model = Job
         fields = '__all__'
+        read_only_fields = ('id',)

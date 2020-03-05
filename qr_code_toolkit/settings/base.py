@@ -159,3 +159,14 @@ INTERNAL_IPS = [
     '127.0.0.1',
     'localhost'
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
