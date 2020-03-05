@@ -1,5 +1,6 @@
 import json
 from rest_framework import serializers
+from rest_framework.exceptions import MethodNotAllowed, ValidationError
 from reversion.models import Version
 
 from roads_qr_kit.models import TrackedItem, Job, JobImage
@@ -29,6 +30,23 @@ class TrackedItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = TrackedItem
         fields = '__all__'
+
+
+class RegisterItemSerializer(serializers.Serializer):
+    item_id = serializers.IntegerField()
+    name = serializers.CharField(max_length=255)
+
+    # noinspection PyMethodMayBeStatic
+    def validate_item_id(self, item_id):
+        if len(TrackedItem.objects.filter(item_id=item_id)) > 0:
+            raise ValidationError(detail='This item is already registered')
+        return item_id
+
+    def update(self, instance, validated_data):
+        pass
+
+    def create(self, validated_data):
+        return TrackedItem.objects.create(**validated_data)
 
 
 class JobImageSerializer(serializers.ModelSerializer):

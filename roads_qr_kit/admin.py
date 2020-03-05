@@ -26,7 +26,7 @@ class JobAdmin(admin.ModelAdmin):
 
 @admin.register(TrackedItem)
 class TrackedItemAdmin(VersionAdmin):
-    list_display = ('name', 'job')
+    list_display = ('name', 'item_id', 'job')
 
 
 admin.site.site_header = "QR-toolkit admin"
