@@ -1,8 +1,5 @@
 <template>
   <div>
-    <p v-if="result" class="decode-result">
-      Last result: <b>{{ result }}</b>
-    </p>
     <qrcode-stream @decode="onDecode" @init="onInit">
       <div v-if="loading" class="loading-indicator">
         Loading...
@@ -11,28 +8,44 @@
         {{ error }}
       </div>
     </qrcode-stream>
+    <scanned-item-modal
+      :is-modal-visible="modalVisible"
+      :item="item"
+      @confirm="confirm"
+    />
   </div>
 </template>
 
 <script>
 import { QrcodeStream } from 'vue-qrcode-reader'
+import { mapActions } from 'vuex'
+import { actionTypes } from '../../store'
+import ScannedItemModal from '../ScannedItemModal'
 
 export default {
   name: 'Scanner',
   components: {
+    ScannedItemModal,
     QrcodeStream
   },
   data() {
     return {
       result: null,
       error: null,
-      loading: false
+      loading: false,
+      modalVisible: false,
+      item: { name: '' }
     }
   },
   methods: {
     onDecode(result) {
       this.result = result
-      this.$emit('result', result)
+      const id = result.substr(result.length - 2, 1)
+      this.$store.dispatch(actionTypes.FETCH_ITEM, id).then((item) => {
+        this.item = item
+        this.modalVisible = true
+      })
+      //
     },
     async onInit(promise) {
       this.loading = true
@@ -55,7 +68,14 @@ export default {
       } finally {
         this.loading = false
       }
-    }
+    },
+    confirm(valid) {
+      this.modalVisible = false
+      if (valid) {
+        this.$emit('result', this.item)
+      }
+    },
+    ...mapActions([actionTypes.FETCH_ITEM])
   }
 }
 </script>

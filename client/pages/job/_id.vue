@@ -41,7 +41,9 @@
     </section>
     <section>
       <div class="container">
-        <b-button @click="scanning = !scanning">Scan</b-button>
+        <b-button @click="scanning = !scanning">
+          {{ scanning ? 'Stop Scanning' : 'Scan' }}
+        </b-button>
       </div>
     </section>
     <section v-if="scanning">
@@ -88,17 +90,10 @@ export default {
       const report = { ...item, missing: !item.missing }
       this[actionTypes.UPDATE_ITEM](report)
     },
-    addItem(ev) {
-      const isAlreadyTrackedInJob = this.job.current_items.find(
-        (el) => el.url === ev
-      )
-      if (!isAlreadyTrackedInJob) {
-        const id = ev.substr(ev.length - 2, 1)
-        console.log(id)
-        this[actionTypes.TRACK_ITEM]({ job: this.job, id }).then((res) =>
-          this[actionTypes.FETCH_ALL_JOBS]()
-        )
-      }
+    addItem(item) {
+      this[actionTypes.TRACK_ITEM]({ job: this.job, item }).then((res) => {
+        this[actionTypes.FETCH_ALL_JOBS]()
+      })
     }
   }
 }

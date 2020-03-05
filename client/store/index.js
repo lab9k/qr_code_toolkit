@@ -1,14 +1,17 @@
 export const actionTypes = {
   FETCH_ALL_JOBS: 'fetch_all_jobs',
   TRACK_ITEM: 'track_item',
-  UPDATE_ITEM: 'update_item'
+  UPDATE_ITEM: 'update_item',
+  FETCH_ITEM: 'fetch_item'
 }
 export const mutationTypes = {
   UPDATE_JOB_LIST: 'update_job_list',
   UPDATE_JOB_ITEM: 'update_job_item'
 }
 export const getterTypes = {
-  JOB_PER_ID: 'job_per_id'
+  JOB_PER_ID: 'job_per_id',
+  ALL_KNOWN_ITEMS: 'all_known_items',
+  ITEM_PER_ID: 'item_per_id'
 }
 
 export const state = () => ({
@@ -20,11 +23,10 @@ export const actions = {
     const jobs = await this.$axios.$get('/job')
     commit(mutationTypes.UPDATE_JOB_LIST, jobs)
   },
-  async [actionTypes.TRACK_ITEM]({ commit }, { job, id: idToTrack }) {
-    const item = await this.$axios.$get(`/item/${idToTrack}`)
+  [actionTypes.TRACK_ITEM]({ commit }, { job, item }) {
     item.job = job.id
     const url = `/item/${item.item_id}/`
-    await this.$axios.$put(url, item)
+    return this.$axios.$put(url, item)
   },
   async [actionTypes.UPDATE_ITEM]({ commit }, updatedItem) {
     const url = `/item/${updatedItem.item_id}/`
@@ -34,6 +36,16 @@ export const actions = {
       commit(mutationTypes.UPDATE_JOB_ITEM, updatedItem)
     } catch (e) {
       res = e.message
+    }
+    return res
+  },
+  async [actionTypes.FETCH_ITEM]({ commit }, id) {
+    const url = `/item/${id}`
+    let res = null
+    try {
+      res = await this.$axios.$get(url)
+    } catch (e) {
+      res = e
     }
     return res
   }
@@ -52,5 +64,15 @@ export const mutations = {
 }
 export const getters = {
   [getterTypes.JOB_PER_ID]: (state) => (id) =>
-    state.jobs.find((job) => job.id === id)
+    state.jobs.find((job) => job.id === id),
+  [getterTypes.ALL_KNOWN_ITEMS](state) {
+    const jobs = [...state.jobs]
+    return jobs
+      .flatMap((job) => job.current_items)
+      .filter((el) => el.location !== null)
+  },
+  [getterTypes.ITEM_PER_ID]: (state, getters) => (id) => {
+    const items = getters[getterTypes.ALL_KNOWN_ITEMS]
+    return items.find((el) => el.item_id === id)
+  }
 }

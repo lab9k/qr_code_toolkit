@@ -6,7 +6,7 @@ from roads_qr_kit.models import TrackedItem, Job, JobImage
 
 
 class VersionSerializer(serializers.ModelSerializer):
-    serialized_data = serializers.SerializerMethodField(method_name='get_serialized_data')
+    serialized_data = serializers.SerializerMethodField(method_name='get_serialized_data', read_only=True)
 
     # noinspection PyMethodMayBeStatic
     def get_serialized_data(self, obj):
@@ -18,7 +18,7 @@ class VersionSerializer(serializers.ModelSerializer):
 
 
 class TrackedItemSerializer(serializers.ModelSerializer):
-    history = serializers.SerializerMethodField(method_name='get_history')
+    history = serializers.SerializerMethodField(method_name='get_history', read_only=True)
     item_id = serializers.IntegerField(read_only=True)
 
     # noinspection PyMethodMayBeStatic
