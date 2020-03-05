@@ -31,7 +31,6 @@ export default {
       type: Object
     }
   },
-  data() {},
   methods: {
     confirm(valid) {
       this.$emit('confirm', valid)
