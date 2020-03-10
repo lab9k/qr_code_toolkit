@@ -16,6 +16,7 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/pwa": "^3.0.0-0",
+    "date-fns": "^2.10.0",
     "nuxt": "^2.0.0",
     "nuxt-buefy": "^0.3.2",
     "nuxt-leaflet": "0.0.19",

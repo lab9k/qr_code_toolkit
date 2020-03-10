@@ -1,46 +1,93 @@
 <template>
   <div class="container">
     <div class="columns is-multiline">
-      <div
-        v-for="historyItem in history"
-        :key="historyItem.id"
-        class="column is-12"
-      >
-        {{ JSON.stringify(historyItem) }}
+      <div class="column is-12">
         <div class="card">
           <div class="card-content">
-            <div class="content">
-              <p>{{ historyItem.last_update }}</p>
-            </div>
+            <item-info-card-content :item="item" />
           </div>
         </div>
       </div>
+      <div class="column is-12">
+        <h4 class="title is-4">History</h4>
+      </div>
+      <template v-if="isUpdated">
+        <div class="column is-12">
+          <b-collapse
+            v-for="(historyItem, index) in history"
+            :key="index"
+            :open="isOpen[index] === true"
+            @open="isOpen[index] = true"
+            @close="isOpen[index] = false"
+            class="card"
+          >
+            <div
+              slot="trigger"
+              slot-scope="props"
+              class="card-header"
+              role="button"
+            >
+              <p class="card-header-title">
+                {{ dateDistanceToNow(historyItem.fields.last_update) }} ago
+              </p>
+              <a class="card-header-icon">
+                <b-icon :icon="props.open ? 'menu-down' : 'menu-up'"> </b-icon>
+              </a>
+            </div>
+            <div class="card-content">
+              <item-info-card-content :item="historyItem.fields" />
+            </div>
+          </b-collapse>
+        </div>
+      </template>
+      <template v-else>
+        <div class="column is-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="content">
+                <p>This item hasn't been updated.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
     </div>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import { formatDistance } from 'date-fns'
 import { actionTypes, getterTypes } from '../../store'
+import ItemInfoCardContent from '../../components/ItemInfoCardContent'
 export default {
   name: 'ItemHistory',
+  components: { ItemInfoCardContent },
+  data() {
+    return {
+      isOpen: []
+    }
+  },
   computed: {
     ...mapGetters([getterTypes.ITEM_PER_ID]),
     item() {
       return this[getterTypes.ITEM_PER_ID](parseInt(this.$route.params.id, 10))
     },
     history() {
-      const itemHistory = this.item?.history?.map(
-        (el) => el.serialized_data[0].fields
-      )
-      return itemHistory
+      return this.item.history.map((el) => el.serialized_data[0])
+    },
+    isUpdated() {
+      return this.history.length > 0
     }
   },
-  mounted() {
-    this[actionTypes.FETCH_ALL_JOBS]()
+  async serverPrefetch() {
+    await this[actionTypes.FETCH_ALL_JOBS]()
   },
   methods: {
-    ...mapActions([actionTypes.FETCH_ALL_JOBS])
+    ...mapActions([actionTypes.FETCH_ALL_JOBS]),
+    dateDistanceToNow(dateStr) {
+      return formatDistance(new Date(dateStr), new Date())
+    }
   }
 }
 </script>
