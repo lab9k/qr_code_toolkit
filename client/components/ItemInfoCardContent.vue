@@ -19,14 +19,6 @@ import { formatDistance } from "date-fns"
     </div>
     <div class="columns">
       <div class="column is-2 is-paddingless">
-        <h6 class="title is-6 is-marginless">Location</h6>
-      </div>
-      <div class="column is-10 is-paddingless">
-        <p class="is-marginless">{{ item.location }}</p>
-      </div>
-    </div>
-    <div class="columns">
-      <div class="column is-2 is-paddingless">
         <h6 class="title is-6 is-marginless">In Use</h6>
       </div>
       <div class="column is-10 is-paddingless">
@@ -51,6 +43,23 @@ import { formatDistance } from "date-fns"
         </p>
       </div>
     </div>
+    <div class="columns">
+      <div class="column is-2 is-paddingless">
+        <h6 class="title is-6 is-marginless">Location</h6>
+      </div>
+      <div class="column is-10 is-paddingless">
+        <p class="is-marginless">
+          <b-button @click="showsMap = !showsMap">
+            {{ showsMap ? 'Hide Map' : 'Show Map' }}
+          </b-button>
+        </p>
+      </div>
+    </div>
+    <div v-if="showsMap" class="columns">
+      <div class="column is-12">
+        <single-point-map :location="item.location" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -58,12 +67,19 @@ import { formatDistance } from "date-fns"
 import { mapGetters } from 'vuex'
 import { formatDistance } from 'date-fns'
 import { getterTypes } from '../store'
+import SinglePointMap from './SinglePointMap'
 export default {
   name: 'ItemInfoCardContent',
+  components: { SinglePointMap },
   props: {
     item: {
       type: Object,
       required: true
+    }
+  },
+  data() {
+    return {
+      showsMap: false
     }
   },
   computed: {
