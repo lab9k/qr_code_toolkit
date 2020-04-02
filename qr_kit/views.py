@@ -1,7 +1,8 @@
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, CreateView
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import get_object_or_404
 from django.views.generic.edit import FormMixin
+from rest_framework.views import APIView
 
 from qr_kit.models import QrCode, QrCodeReport
 from qr_kit.forms import DynamicQrForm

@@ -25,3 +25,7 @@ class QrCodeSerializer(serializers.HyperlinkedModelSerializer):
         model = QrCode
         fields = ('id', 'values', 'scan_url', 'uuid', 'category', 'url')
         read_only_fields = ['uuid', 'id', 'scan_url', 'url']
+        lookup_field = 'slug'
+        extra_kwargs = {
+            'url': {'lookup_field': 'uuid'}
+        }

@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'jobqr',
     'roads_qr_kit',
-    'qr_kit'
+    'qr_kit',
+    'qr_kit_api'
 ]
 
 MIDDLEWARE = [

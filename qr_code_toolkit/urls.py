@@ -6,7 +6,6 @@ from django.contrib.auth import views as auth_views
 from django.views.generic import RedirectView
 
 from jobqr.urls import router as oldRouter
-from qr_kit.views import QrCodeView, ReportView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -16,11 +15,9 @@ urlpatterns = [
     ])),
     path('old/', include('jobqr.urls')),
     path('old/api/', include(oldRouter.urls)),
-    path('', RedirectView.as_view(url='/api/v3', permanent=False)),
+    path('', include('qr_kit.urls')),
     path('api/v2/', include('roads_qr_kit.urls')),
-    path('api/v3/', include('qr_kit.urls')),
-    path('reports/', ReportView.as_view(), name='report-list'),
-    path('<slug:uuid>/', QrCodeView.as_view(), name='qr_code-detail')
+    path('api/v3/', include('qr_kit_api.urls')),
 ]
 
 if settings.DEBUG:
