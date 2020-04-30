@@ -1,7 +1,7 @@
 <template>
   <div>
     <header>
-      <b-navbar :mobile-burger="false" type="is-primary">
+      <b-navbar :mobile-burger="true" type="is-primary">
         <template slot="brand">
           <b-navbar-item :to="{ path: '/' }" tag="router-link">
             QR-toolkit scanner
