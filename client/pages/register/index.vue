@@ -13,9 +13,7 @@ export default {
   components: { scanner: () => import('@/components/client-only/Scanner') },
   methods: {
     async createItem(id) {
-      // TODO: check if item exists
       const exists = await this[actionTypes.FETCH_ITEM](id)
-      // TODO: if not, create popup, asking for name, POST data to backend
       if (!exists) {
         this.$buefy.dialog.prompt({
           message: `What is the item name?`,

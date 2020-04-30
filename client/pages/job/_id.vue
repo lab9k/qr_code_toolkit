@@ -54,7 +54,7 @@
         <scanner @result="addItem" />
       </client-only>
     </section>
-    <section>
+    <section v-if="addingPics">
       <div class="container">
         <form @submit="submitPictures">
           <b-field label="Upload another picture">

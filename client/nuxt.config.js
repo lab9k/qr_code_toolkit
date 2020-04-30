@@ -75,6 +75,9 @@ export default {
   pwa: {
     manifest: {
       name: 'QR toolkit scanner'
+    },
+    meta: {
+      nativeUI: true
     }
   },
 
