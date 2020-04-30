@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils.timezone import now
 
 from location_field.models.plain import PlainLocationField
 from reversion.models import Version

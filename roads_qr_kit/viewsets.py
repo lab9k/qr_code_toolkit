@@ -1,10 +1,10 @@
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
+from rest_framework.parsers import MultiPartParser
 from rest_framework.request import Request
 from rest_framework.response import Response
-from rest_framework.parsers import FileUploadParser, MultiPartParser, FormParser
 
-from roads_qr_kit.models import Job, TrackedItem, JobImage
+from roads_qr_kit.models import Job, TrackedItem
 from roads_qr_kit.serializers import JobSerializer, TrackedItemSerializer, JobImageSerializer
 
 

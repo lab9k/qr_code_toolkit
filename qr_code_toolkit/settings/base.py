@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
-
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -38,17 +37,15 @@ INSTALLED_APPS = [
     'location_field.apps.DefaultConfig',
     'rest_framework',
     'reversion',
-    'debug_toolbar',
     'corsheaders',
     'jobqr',
     'roads_qr_kit',
     'qr_kit',
-    'qr_kit_api'
+    'qr_kit_api',
 ]
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

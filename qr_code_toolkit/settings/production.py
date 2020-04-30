@@ -12,7 +12,6 @@ DEBUG_TOOLBAR_PATCH_SETTINGS = False
 _index = INSTALLED_APPS.index('django.contrib.staticfiles')
 [INSTALLED_APPS.insert(_index + 1, x) for x in ['cloudinary',
                                                 'cloudinary_storage']]
-
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
