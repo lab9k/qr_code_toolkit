@@ -17,14 +17,14 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class QrCodeSerializer(serializers.HyperlinkedModelSerializer):
-    values = serializers.JSONField()
+    values = serializers.JSONField(required=False)
     scan_url = serializers.HyperlinkedIdentityField(view_name='qr_code-detail', lookup_url_kwarg='uuid',
                                                     lookup_field='uuid', read_only=True)
 
     class Meta:
         model = QrCode
         fields = ('id', 'values', 'scan_url', 'uuid', 'category', 'url')
-        read_only_fields = ['uuid', 'id', 'scan_url', 'url']
+        read_only_fields = ['id', 'scan_url', 'url']
         lookup_field = 'slug'
         extra_kwargs = {
             'url': {'lookup_field': 'uuid'}

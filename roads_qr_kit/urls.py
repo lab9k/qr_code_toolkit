@@ -7,5 +7,5 @@ router = routers.DefaultRouter()
 router.register(r'job', viewsets.JobViewSet)
 router.register(r'item', viewsets.ItemViewSet)
 
-urlpatterns = [path('item/register/', RegisterView.as_view(), name='register-item')]
+urlpatterns = [path('item/register/', RegisterView.as_view(), name='register-item'), ]
 urlpatterns += router.urls

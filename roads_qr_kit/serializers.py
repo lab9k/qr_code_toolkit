@@ -1,6 +1,6 @@
 import json
 from rest_framework import serializers
-from rest_framework.exceptions import MethodNotAllowed, ValidationError
+from rest_framework.exceptions import ValidationError
 from reversion.models import Version
 
 from roads_qr_kit.models import TrackedItem, Job, JobImage

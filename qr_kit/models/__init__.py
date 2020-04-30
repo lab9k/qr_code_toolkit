@@ -31,10 +31,10 @@ class Category(models.Model):
 
 
 class QrCode(models.Model):
-    uuid = models.UUIDField(default=uuid.uuid4, editable=False)
+    uuid = models.CharField(default=uuid.uuid4, editable=True, unique=True, max_length=64)
 
-    category = models.ForeignKey(to=Category, on_delete=models.CASCADE, related_name='codes')
-    values = JSONField(default=dict)
+    category = models.ForeignKey(to=Category, on_delete=models.CASCADE, related_name='codes', null=True, blank=True)
+    values = JSONField(default=dict, blank=True, null=True)
 
 
 class QrCodeReport(models.Model):

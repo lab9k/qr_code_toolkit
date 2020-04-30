@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.timezone import now
 
 from location_field.models.plain import PlainLocationField
 from reversion.models import Version
@@ -12,8 +13,10 @@ class Job(models.Model):
 
 
 class JobImage(models.Model):
-    image = models.ImageField(upload_to='img/jobs/', blank=True)
+    stored_image = models.ImageField(upload_to='img/jobs/')
     job = models.ForeignKey(to=Job, on_delete=models.CASCADE, related_name='images')
+    created_at = models.DateTimeField(auto_now_add=True)
+    remark = models.CharField(max_length=255, blank=True, default='')
 
 
 class TrackedItem(models.Model):

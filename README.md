@@ -20,5 +20,3 @@ $ python manage.py runserver
 ```
 
 ### TODO
-
-* Remove UUID in favor of CharField, this way we can have fully custom (and short urls). When using the registration tool, there should never be a collision.
