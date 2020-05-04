@@ -21,6 +21,7 @@
     "nuxt-buefy": "^0.3.28",
     "nuxt-leaflet": "0.0.19",
     "vue": "^2.6.11",
+    "vue-browser-geolocation": "^1.8.0",
     "vue-qrcode-reader": "^2.1.1"
   },
   "devDependencies": {

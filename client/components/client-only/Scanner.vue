@@ -53,6 +53,13 @@ export default {
         this.$emit('result', id)
       } else {
         this.$store.dispatch(actionTypes.FETCH_ITEM, id).then((item) => {
+          if (item === undefined) {
+            this.$buefy.toast.open({
+              message: `This Qr-code is not recognized, are you sure it's registered?`,
+              type: 'is-danger'
+            })
+            return
+          }
           this.item = item
           this.modalVisible = true
         })

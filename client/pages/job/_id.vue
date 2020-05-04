@@ -41,10 +41,10 @@
     </section>
     <section>
       <div class="container">
-        <b-button @click="startScanning">
+        <b-button @click="startScanning" class="is-info is-outlined is-medium">
           {{ scanning ? 'Stop Scanning' : 'Scan' }}
         </b-button>
-        <b-button @click="addPictures">
+        <b-button @click="addPictures" class="is-info is-outlined is-medium">
           {{ addingPics ? 'Close picture menu' : 'Open picture menu' }}
         </b-button>
       </div>
@@ -110,7 +110,9 @@ export default {
   data() {
     return {
       scanning: false,
-      addingPics: false
+      addingPics: false,
+      location: null,
+      requestsWithoutLocation: []
     }
   },
   computed: {
@@ -131,8 +133,32 @@ export default {
       return `${base}/job/${this.$route.params.id}/add-image/`
     }
   },
+  watch: {
+    location: {
+      handler(val, oldVal) {
+        if (this.requestsWithoutLocation.length > 0) {
+          this.requestsWithoutLocation.forEach(({ job, item }) => {
+            this.$buefy.snackbar.open({
+              message: `Updating item: ${item.name}`,
+              type: 'is-warning'
+            })
+            this[actionTypes.TRACK_ITEM]({
+              job,
+              item: { ...item, location: val }
+            })
+          })
+          this.requestsWithoutLocation = []
+          this[actionTypes.FETCH_ALL_JOBS]()
+        }
+      },
+      immediate: false
+    }
+  },
   mounted() {
     this[actionTypes.FETCH_ALL_JOBS]()
+    this.$watchLocation().then(({ lat, lng }) => {
+      this.location = `${lat},${lng}`
+    })
   },
   methods: {
     ...mapActions([
@@ -145,9 +171,32 @@ export default {
       this[actionTypes.UPDATE_ITEM](report)
     },
     addItem(item) {
-      this[actionTypes.TRACK_ITEM]({ job: this.job, item }).then((res) => {
-        this[actionTypes.FETCH_ALL_JOBS]()
-      })
+      if (process.client) {
+        console.log('App is confirmed to be in CLIENT mode')
+
+        if (!this.location) {
+          this.$buefy.snackbar.open({
+            message:
+              "Location isn't available yet. Item will be updated once it is.",
+            type: 'is-info'
+          })
+          this.requestsWithoutLocation.push({
+            job: this.job,
+            item: { ...item }
+          })
+          return
+        }
+        this.$buefy.snackbar.open({
+          message: 'Location is available, updating immediatly',
+          type: 'is-info'
+        })
+        this[actionTypes.TRACK_ITEM]({
+          job: this.job,
+          item: { ...item, location: this.location }
+        }).then((res) => {
+          this[actionTypes.FETCH_ALL_JOBS]()
+        })
+      }
     },
     startScanning() {
       if (this.addingPics) {

@@ -28,7 +28,8 @@ export default {
     },
     item: {
       required: true,
-      type: Object
+      type: Object,
+      default: () => ({ name: '' })
     }
   },
   methods: {

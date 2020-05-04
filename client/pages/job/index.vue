@@ -14,9 +14,9 @@
             </div>
           </div>
           <footer class="card-footer">
-            <a :href="job.url" target="_blank" class="card-footer-item">
+            <!-- <a :href="job.url" target="_blank" class="card-footer-item">
               Api link
-            </a>
+            </a>-->
             <nuxt-link :to="`/job/${job.id}`" class="card-footer-item">
               Detail page
             </nuxt-link>
