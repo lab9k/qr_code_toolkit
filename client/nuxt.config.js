@@ -31,13 +31,10 @@ export default {
   /*
    ** Nuxt.js dev-modules
    */
-  buildModules:
-    process.env.NODE_ENV === 'production'
-      ? []
-      : [
-          // Doc: https://github.com/nuxt-community/eslint-module
-          '@nuxtjs/eslint-module'
-        ],
+  buildModules: [
+    // Doc: https://github.com/nuxt-community/eslint-module
+    '@nuxtjs/eslint-module'
+  ],
   eslint: {
     fix: true
   },
