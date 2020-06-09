@@ -9,13 +9,16 @@
         </template>
         <template slot="end">
           <b-navbar-item :to="{ path: '/' }" tag="router-link">
-            <b-icon icon="home" size="is-medium" />
+            <b-icon icon="home" />
+            <span>Jobs</span>
           </b-navbar-item>
           <b-navbar-item :to="{ path: '/map' }" tag="router-link">
-            <b-icon icon="map-marker" size="is-medium" />
+            <b-icon icon="map-marker" />
+            <span>Map</span>
           </b-navbar-item>
           <b-navbar-item :to="{ path: '/register' }" tag="router-link">
-            <b-icon icon="plus-circle" size="is-medium" />
+            <b-icon icon="plus-circle" />
+            <span>Register</span>
           </b-navbar-item>
         </template>
       </b-navbar>
