@@ -29,6 +29,7 @@
 <script>
 import { mapActions, mapState } from 'vuex'
 import { actionTypes } from '../../store/index'
+
 export default {
   data() {
     return {}
@@ -41,7 +42,12 @@ export default {
   },
   methods: {
     getQrUrl(job) {
-      return `http://qrcodeservice.herokuapp.com/?query=${job.url}`
+      if (process.client) {
+        const currentURL = window.location.origin
+        const joburl = currentURL + `/job/${job.id}`
+        return `https://qrcodeservice.herokuapp.com/?query=${joburl}`
+      }
+      return ''
     },
     ...mapActions([actionTypes.FETCH_ALL_JOBS])
   }
