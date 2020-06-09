@@ -3,6 +3,18 @@
     <div class="columns is-multiline">
       <div class="column is-12">
         <div class="card">
+          <div class="card-image">
+            <client-only>
+              <figure>
+                <img
+                  :src="
+                    `https://qrcodeservice.herokuapp.com/?query=${currentURL}`
+                  "
+                  alt="Placeholder image"
+                />
+              </figure>
+            </client-only>
+          </div>
           <div class="card-content">
             <item-info-card-content :item="item" />
           </div>
@@ -78,6 +90,12 @@ export default {
     },
     isUpdated() {
       return this.history.length > 0
+    },
+    currentURL() {
+      if (process.client) {
+        return window.location.href
+      }
+      return ''
     }
   },
   async serverPrefetch() {
