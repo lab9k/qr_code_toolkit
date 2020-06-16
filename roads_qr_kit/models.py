@@ -6,6 +6,7 @@ from reversion.models import Version
 
 class Job(models.Model):
     name = models.CharField(max_length=255)
+    order_number = models.BigIntegerField()
 
     def __str__(self):
         return f'{self.name}'
