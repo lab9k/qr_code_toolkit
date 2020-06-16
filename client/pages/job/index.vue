@@ -15,8 +15,11 @@
               </figure>
             </div>
             <div class="card-content">
-              <div class="content">
-                <span>{{ job.name }}</span>
+              <div class="media">
+                <div class="media-content">
+                  <p class="title is-6">{{ job.name }}</p>
+                  <p class="subtitle is-6">Order: {{ job.order_number }}</p>
+                </div>
               </div>
             </div>
             <footer class="card-footer">
