@@ -3,9 +3,9 @@ from django.contrib import admin
 from django.conf import settings
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
-from django.views.generic import RedirectView
 
 from jobqr.urls import router as oldRouter
+from roads_qr_kit.views import QrCodeView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -15,9 +15,10 @@ urlpatterns = [
     ])),
     path('old/', include('jobqr.urls')),
     path('old/api/', include(oldRouter.urls)),
-    path('', include('qr_kit.urls')),
+    path('code/<int:pk>/', QrCodeView.as_view(), name='qr_code_public'),
     path('api/v2/', include('roads_qr_kit.urls')),
     path('api/v3/', include('qr_kit_api.urls')),
+    path('', include('qr_kit.urls')),
 ]
 
 if settings.DEBUG:

@@ -21,6 +21,7 @@ class VersionSerializer(serializers.ModelSerializer):
 class TrackedItemSerializer(serializers.ModelSerializer):
     history = serializers.SerializerMethodField(method_name='get_history', read_only=True)
     item_id = serializers.IntegerField(read_only=True)
+    qr_payload = serializers.HyperlinkedIdentityField('qr_code_public', read_only=True)
 
     # noinspection PyMethodMayBeStatic
     def get_history(self, obj):
