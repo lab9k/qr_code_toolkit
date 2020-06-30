@@ -2,11 +2,23 @@ from django.db import models
 
 from location_field.models.plain import PlainLocationField
 from reversion.models import Version
+import requests
 
 
 class Job(models.Model):
     name = models.CharField(max_length=255)
     order_number = models.BigIntegerField()
+    address = models.CharField(max_length=255)
+    location = models.CharField(max_length=128, default='')
+
+    def save(self, *args, **kwargs):
+        url_address = self.address.replace(' ', '+')
+        data = requests.get(
+            f'https://nominatim.openstreetmap.org/?q={url_address}&format=json&limit=1&country=Belgium').json()
+        lat = data[0]['lat']
+        lon = data[0]['lon']
+        self.location = f'{lat},{lon}'
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f'{self.name}'

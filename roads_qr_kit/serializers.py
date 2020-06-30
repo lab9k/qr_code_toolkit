@@ -54,6 +54,7 @@ class JobImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = JobImage
         fields = '__all__'
+        read_only_fields = ['location']
 
 
 class JobSerializer(serializers.ModelSerializer):

@@ -13,6 +13,7 @@ class ImageInline(admin.StackedInline):
 class JobAdmin(admin.ModelAdmin):
     list_display = ('name', 'current_items')
     inlines = [ImageInline]
+    readonly_fields = ['location']
 
     def current_items(self, obj):
         if obj.current_items and len(obj.current_items.all()) > 0:
