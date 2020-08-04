@@ -27,7 +27,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['~/plugins/vue-geolocation'],
+  plugins: [{ src: '~/plugins/vue-geolocation.client.js', mode: 'client' }],
   /*
    ** Nuxt.js dev-modules
    */

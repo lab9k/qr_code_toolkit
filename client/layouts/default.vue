@@ -8,9 +8,13 @@
           </b-navbar-item>
         </template>
         <template slot="end">
+          <b-navbar-item @click="toggleSideBar()">
+            <b-icon icon="menu" />
+            <span>Choose Job</span>
+          </b-navbar-item>
           <b-navbar-item :to="{ path: '/' }" tag="router-link">
             <b-icon icon="home" />
-            <span>Jobs</span>
+            <span>Job list</span>
           </b-navbar-item>
           <b-navbar-item :to="{ path: '/map' }" tag="router-link">
             <b-icon icon="map-marker" />
@@ -23,6 +27,7 @@
         </template>
       </b-navbar>
     </header>
+    <side-bar ref="sidebar"></side-bar>
     <main class="main-content">
       <nuxt />
     </main>
@@ -30,7 +35,20 @@
 </template>
 
 <script>
-export default {}
+import SideBar from '../components/SideBar'
+export default {
+  components: { SideBar },
+  data() {
+    return {
+      open: false
+    }
+  },
+  methods: {
+    toggleSideBar() {
+      this.$refs.sidebar.toggle()
+    }
+  }
+}
 </script>
 
 <style></style>

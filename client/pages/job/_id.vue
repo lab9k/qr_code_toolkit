@@ -2,6 +2,12 @@
   <div class="container is-fluid">
     <section>
       <div class="container">
+        <h2>{{ job.name }}</h2>
+        <h4>{{ job.address }}</h4>
+      </div>
+    </section>
+    <section>
+      <div class="container">
         <b-table :data="isEmpty ? [] : job.current_items" :mobile-cards="true">
           <template slot-scope="props">
             <b-table-column field="id" label="ID" width="40" numeric>
@@ -121,7 +127,8 @@ export default {
       return (
         this[getterTypes.JOB_PER_ID](parseInt(this.$route.params.id, 10)) || {
           images: [],
-          current_items: []
+          current_items: [],
+          title: ''
         }
       )
     },
