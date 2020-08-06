@@ -6,12 +6,12 @@
           <b-navbar-item :to="{ path: '/' }" tag="router-link">
             QR-toolkit scanner
           </b-navbar-item>
-        </template>
-        <template slot="end">
           <b-navbar-item @click="toggleSideBar()">
             <b-icon icon="menu" />
             <span>Choose Job</span>
           </b-navbar-item>
+        </template>
+        <template slot="end">
           <b-navbar-item :to="{ path: '/' }" tag="router-link">
             <b-icon icon="home" />
             <span>Job list</span>
