@@ -21,7 +21,7 @@
 
       <div class="p-1">
         <div
-          v-for="job in jobs"
+          v-for="job in orderedJobs"
           :key="job.id"
           @click="goTo(job)"
           class="m-t-sm card"
@@ -41,6 +41,7 @@
 <script>
 import { mapState } from 'vuex'
 import { LocationMixin } from '@/mixins/locationMixin'
+
 export default {
   name: 'SideBar',
   mixins: [LocationMixin],
@@ -54,9 +55,38 @@ export default {
     }
   },
   computed: {
-    ...mapState(['jobs'])
+    ...mapState(['jobs']),
+    orderedJobs() {
+      return [...this.jobs].sort(
+        ({ location: locationA }, { location: locationB }) => {
+          if (this.location) {
+            const [latA, lonA] = locationA.split(',')
+            const [latB, lonB] = locationB.split(',')
+            const [currLat, currLon] = this.location
+            return (
+              this.distanceBetween(currLat, currLon, latA, lonA) >
+              this.distanceBetween(currLat, currLon, latB, lonB)
+            )
+          } else {
+            return false
+          }
+        }
+      )
+    }
   },
   methods: {
+    distanceBetween(latA, lonA, latB, lonB) {
+      const R = 6371e3
+      const φ1 = (latA * Math.PI) / 180
+      const φ2 = (latB * Math.PI) / 180
+      const Δφ = ((latB - latA) * Math.PI) / 180
+      const Δλ = ((lonB - lonA) * Math.PI) / 180
+      const a =
+        Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+        Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2)
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+      return R * c
+    },
     toggle() {
       this.open = !this.open
     },
