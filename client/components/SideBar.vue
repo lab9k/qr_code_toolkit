@@ -64,7 +64,7 @@ export default {
             const [latB, lonB] = locationB.split(',')
             const [currLat, currLon] = this.location
             return (
-              this.distanceBetween(currLat, currLon, latA, lonA) <
+              this.distanceBetween(currLat, currLon, latA, lonA) -
               this.distanceBetween(currLat, currLon, latB, lonB)
             )
           } else {
