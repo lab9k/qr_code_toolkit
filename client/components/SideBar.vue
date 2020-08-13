@@ -6,18 +6,10 @@
       :overlay="overlay"
       :right="right"
       :open.sync="open"
+      mobile="fullwidth"
       type="is-light"
     >
-      <div class="p-1">
-        <b-menu>
-          <b-menu-list label="Location">
-            <b-menu-item
-              :label="location ? `${location[0]} , ${location[1]}` : ''"
-              icon="world"
-            ></b-menu-item>
-          </b-menu-list>
-        </b-menu>
-      </div>
+      <div class="p-1">{{ current_address }}</div>
 
       <div class="p-1">
         <div
@@ -27,9 +19,16 @@
           class="m-t-sm card"
         >
           <div class="card-content">
+            <div class="media">
+              <div class="media-content">
+                <p class="title is-4">{{ job.name }}</p>
+                <p class="subtitle is-6">{{ job.address }}</p>
+              </div>
+            </div>
             <div class="content">
-              <span>{{ job.name }}</span>
-              <span>{{ job.address }}</span>
+              <span></span>
+              <span></span>
+              <span>{{ job.order_number }}</span>
             </div>
           </div>
         </div>

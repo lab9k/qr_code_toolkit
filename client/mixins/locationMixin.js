@@ -8,7 +8,8 @@ export const LocationMixin = {
   },
   data() {
     return {
-      location: null
+      location: null,
+      current_address: 'even geduld...'
     }
   },
   methods: {
@@ -23,6 +24,18 @@ export const LocationMixin = {
         Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2)
       const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
       return R * c
+    }
+  },
+  watch: {
+    async location(val) {
+      if (!this.location) return 'calculating'
+      const url = `https://nominatim.openstreetmap.org/?q=${this.location.join(
+        ','
+      )}&format=json&limit=1&country=Belgium`
+
+      const [data] = await this.$axios.$get(url)
+
+      this.current_address = data.display_name
     }
   }
 }

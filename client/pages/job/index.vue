@@ -38,9 +38,11 @@
 </template>
 <script>
 import { mapActions, mapState } from 'vuex'
+import { LocationMixin } from '@/mixins/locationMixin'
 import { actionTypes } from '../../store/index'
 
 export default {
+  mixins: [LocationMixin],
   data() {
     return {
       filterQuery: ''
@@ -55,6 +57,23 @@ export default {
           `${job.order_number}`.includes(this.filterQuery.toLowerCase())
         )
       })
+    },
+    orderedFilteredJobs() {
+      return [...this.filteredJobs].sort(
+        ({ location: locationA }, { location: locationB }) => {
+          if (this.location) {
+            const [latA, lonA] = locationA.split(',')
+            const [latB, lonB] = locationB.split(',')
+            const [currLat, currLon] = this.location
+            return (
+              this.distanceBetween(currLat, currLon, latA, lonA) -
+              this.distanceBetween(currLat, currLon, latB, lonB)
+            )
+          } else {
+            return false
+          }
+        }
+      )
     }
   },
   mounted() {
