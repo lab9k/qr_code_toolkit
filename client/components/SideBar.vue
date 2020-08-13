@@ -9,7 +9,10 @@
       mobile="fullwidth"
       type="is-light"
     >
-      <div class="p-1">{{ current_address }}</div>
+      <div class="p-1">
+        <p class="title is-5">Huidig adres</p>
+        <p class="subtitle is-6">{{ current_address }}</p>
+      </div>
 
       <div class="p-1">
         <div

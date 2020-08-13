@@ -2,8 +2,10 @@
   <div class="container is-fluid">
     <section>
       <div class="container">
-        <h2>{{ job.name }}</h2>
-        <h4>{{ job.address }}</h4>
+        <div class="py-2">
+          <p class="title is-5">{{ job.name }}</p>
+          <p class="subtitle is-6">{{ job.address }}</p>
+        </div>
       </div>
     </section>
     <section>
@@ -231,4 +233,9 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.py-2 {
+  padding-bottom: 0.5rem;
+  padding-top: 0.5rem;
+}
+</style>
