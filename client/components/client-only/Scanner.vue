@@ -20,7 +20,7 @@
 <script>
 import { QrcodeStream } from 'vue-qrcode-reader'
 import { mapActions } from 'vuex'
-import { actionTypes } from '../../store'
+import { actionTypes } from '@/store'
 import ScannedItemModal from '../ScannedItemModal'
 
 export default {
@@ -48,6 +48,7 @@ export default {
   methods: {
     onDecode(result) {
       this.result = result
+      console.log(`Result: ${result}`)
       const id = parseInt(result.match(/\/([0-9]+)\//)[1], 10)
       if (this.registering === true) {
         this.$emit('result', id)

@@ -1,6 +1,7 @@
 export const LocationMixin = {
   created() {
     if (process.client) {
+      console.log('requesting location')
       this.$watchLocation().then(({ lat, lng }) => {
         this.location = [lat, lng]
       })
