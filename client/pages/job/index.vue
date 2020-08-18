@@ -18,7 +18,9 @@
               <div class="media">
                 <div class="media-content">
                   <p class="title is-6">{{ job.name }}</p>
-                  <p class="subtitle is-6">Order: {{ job.order_number }}</p>
+                  <p class="subtitle is-6">
+                    Order nummer: {{ job.order_number }}
+                  </p>
                 </div>
               </div>
             </div>
@@ -27,7 +29,7 @@
                 Api link
               </a>-->
               <nuxt-link :to="`/job/${job.id}`" class="card-footer-item">
-                Detail page
+                Job detail pagina
               </nuxt-link>
             </footer>
           </div>

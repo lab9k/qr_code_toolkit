@@ -8,10 +8,10 @@
       </div>
       <footer class="card-footer">
         <a @click="confirm(true)" class="card-footer-item has-text-success">
-          Confirm
+          Bevestig
         </a>
         <a @click="confirm(false)" class="card-footer-item has-text-danger">
-          Reject
+          Annuleer
         </a>
       </footer>
     </div>

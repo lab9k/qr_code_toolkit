@@ -1,9 +1,8 @@
-import { formatDistance } from "date-fns"
 <template>
   <div class="content">
     <div class="columns">
       <div class="column is-2 is-paddingless">
-        <h6 class="title is-6 is-marginless">Name</h6>
+        <h6 class="title is-6 is-marginless">Naam</h6>
       </div>
       <div class="column is-10 is-paddingless">
         <p class="is-marginless">{{ item.name }}</p>
@@ -19,7 +18,7 @@ import { formatDistance } from "date-fns"
     </div>
     <div class="columns">
       <div class="column is-2 is-paddingless">
-        <h6 class="title is-6 is-marginless">In Use</h6>
+        <h6 class="title is-6 is-marginless">In Gebruik</h6>
       </div>
       <div class="column is-10 is-paddingless">
         <p class="is-marginless">{{ item.is_in_use }}</p>
@@ -27,7 +26,7 @@ import { formatDistance } from "date-fns"
     </div>
     <div class="columns">
       <div class="column is-2 is-paddingless">
-        <h6 class="title is-6 is-marginless">Is Missing</h6>
+        <h6 class="title is-6 is-marginless">Is Vermist</h6>
       </div>
       <div class="column is-10 is-paddingless">
         <p class="is-marginless">{{ item.missing }}</p>
@@ -35,22 +34,22 @@ import { formatDistance } from "date-fns"
     </div>
     <div class="columns">
       <div class="column is-2 is-paddingless">
-        <h6 class="title is-6 is-marginless">Last Update</h6>
+        <h6 class="title is-6 is-marginless">Laatste Update</h6>
       </div>
       <div class="column is-10 is-paddingless">
         <p class="is-marginless">
-          {{ dateDistanceToNow(item.last_update) }} ago
+          {{ dateDistanceToNow(item.last_update) }} geleden
         </p>
       </div>
     </div>
     <div class="columns">
       <div class="column is-2 is-paddingless">
-        <h6 class="title is-6 is-marginless">Location</h6>
+        <h6 class="title is-6 is-marginless">Locatie</h6>
       </div>
       <div class="column is-10 is-paddingless">
         <p class="is-marginless">
           <b-button @click="showsMap = !showsMap">
-            {{ showsMap ? 'Hide Map' : 'Show Map' }}
+            {{ showsMap ? 'Verberg Map' : 'Toon Map' }}
           </b-button>
         </p>
       </div>
@@ -66,7 +65,7 @@ import { formatDistance } from "date-fns"
 <script>
 import { mapGetters } from 'vuex'
 import { formatDistance } from 'date-fns'
-import { getterTypes } from '../store'
+import { getterTypes } from '@/store'
 import SinglePointMap from './SinglePointMap'
 export default {
   name: 'ItemInfoCardContent',

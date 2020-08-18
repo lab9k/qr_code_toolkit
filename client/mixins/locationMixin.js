@@ -2,9 +2,18 @@ export const LocationMixin = {
   created() {
     if (process.client) {
       console.log('requesting location')
-      this.$watchLocation().then(({ lat, lng }) => {
-        this.location = [lat, lng]
-      })
+      this.$watchLocation({ timeout: 5000 })
+        .then(({ lat, lng }) => {
+          this.location = [lat, lng]
+        })
+        .catch((message) => {
+          this.$buefy.toast.open({
+            duration: 5000,
+            message: `Er ging iets mis: ${message}`,
+            position: 'is-bottom',
+            type: 'is-danger'
+          })
+        })
     }
   },
   data() {

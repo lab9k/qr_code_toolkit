@@ -2,16 +2,16 @@
   <div id="map-wrap" class="container">
     <client-only>
       <l-map :zoom="13" :center="[51.0538286, 3.7250121]">
-        <l-lwms-tile-layer
+        <!--<l-lwms-tile-layer
           :layers="maplayer.layers"
           :visible="maplayer.visible"
           :name="maplayer.name"
           :base-url="baseUrl"
           layer-type="base"
-        ></l-lwms-tile-layer>
-        <!--        <l-tile-layer-->
-        <!--          url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"-->
-        <!--        ></l-tile-layer>-->
+        ></l-lwms-tile-layer>-->
+        <l-tile-layer
+          url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
+        ></l-tile-layer>
         <l-marker
           v-for="item in items"
           :key="item.id"
@@ -27,7 +27,7 @@
                     type="is-info is-light is-small"
                     tag="router-link"
                   >
-                    History
+                    Geschiedenis
                   </b-button>
                 </div>
               </div>

@@ -8,13 +8,13 @@
           </b-navbar-item>
           <b-navbar-item @click="toggleSideBar()">
             <b-icon icon="menu" />
-            <span>Choose Job</span>
+            <span>Snelle job selectie</span>
           </b-navbar-item>
         </template>
         <template slot="end">
           <b-navbar-item :to="{ path: '/' }" tag="router-link">
             <b-icon icon="home" />
-            <span>Job list</span>
+            <span>Alle jobs</span>
           </b-navbar-item>
           <b-navbar-item :to="{ path: '/map' }" tag="router-link">
             <b-icon icon="map-marker" />
@@ -22,7 +22,7 @@
           </b-navbar-item>
           <b-navbar-item :to="{ path: '/register' }" tag="router-link">
             <b-icon icon="plus-circle" />
-            <span>Register</span>
+            <span>Registreer</span>
           </b-navbar-item>
         </template>
       </b-navbar>

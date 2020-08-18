@@ -16,9 +16,9 @@ export default {
       const exists = await this[actionTypes.FETCH_ITEM](id)
       if (!exists) {
         this.$buefy.dialog.prompt({
-          message: `What is the item name?`,
+          message: `Welk item is dit?`,
           inputAttrs: {
-            placeholder: 'e.g. Paaltje 10',
+            placeholder: 'bv. Paaltje 10',
             maxlength: 255
           },
           trapFocus: true,
@@ -26,15 +26,30 @@ export default {
             const data = { name: value, id }
             this[actionTypes.REGISTER_ITEM](data)
               .then(() =>
-                this.$buefy.toast.open('Item successfully registered!')
+                this.$buefy.toast.open({
+                  duration: 5000,
+                  message: `Item is geregistreerd`,
+                  position: 'is-bottom',
+                  type: 'is-success'
+                })
               )
-              .catch(() => this.$buefy.toast.open('Something went wrong!'))
+              .catch(() =>
+                this.$buefy.toast.open({
+                  duration: 5000,
+                  message: `Er ging iets mis bij het registreren`,
+                  position: 'is-bottom',
+                  type: 'is-danger'
+                })
+              )
           }
         })
       } else {
-        this.$buefy.toast.open(
-          `This item (${exists.name}) is already registered`
-        )
+        this.$buefy.toast.open({
+          duration: 5000,
+          message: `Dit item (${exists.name}) is al geregistreerd`,
+          position: 'is-bottom',
+          type: 'is-warning'
+        })
       }
     },
     ...mapActions([actionTypes.FETCH_ITEM, actionTypes.REGISTER_ITEM])

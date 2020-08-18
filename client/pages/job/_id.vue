@@ -16,21 +16,21 @@
               {{ props.row.id }}
             </b-table-column>
 
-            <b-table-column field="name" label="Name">
+            <b-table-column field="name" label="Naam">
               {{ props.row.name }}
             </b-table-column>
 
-            <b-table-column field="last_update" label="Last Update">
+            <b-table-column field="last_update" label="Laatste Update">
               {{ props.row.last_update }}
             </b-table-column>
 
-            <b-table-column field="missing" label="Missing">
-              {{ props.row.missing }}
+            <b-table-column field="missing" label="Vermist">
+              {{ props.row.missing ? 'Ja' : 'Nee' }}
             </b-table-column>
 
-            <b-table-column field="report_missing" label="Missing/Found">
+            <b-table-column field="report_missing" label="vermist/gevonden">
               <b-button @click="reportMissing(props.row)">
-                Report {{ props.row.missing ? 'Found' : 'Missing' }}
+                Report {{ props.row.missing ? 'Gevonden' : 'Vermist' }}
               </b-button>
             </b-table-column>
           </template>
@@ -40,7 +40,7 @@
                 <p>
                   <b-icon icon="emoticon-sad" size="is-large"> </b-icon>
                 </p>
-                <p>No items tracked at the moment</p>
+                <p>Er zijn geen items gevonden voor deze job.</p>
               </div>
             </section>
           </template>
@@ -53,7 +53,7 @@
           {{ scanning ? 'Stop Scanning' : 'Scan' }}
         </b-button>
         <b-button @click="addPictures" class="is-info is-outlined is-medium">
-          {{ addingPics ? 'Close picture menu' : 'Open picture menu' }}
+          {{ addingPics ? 'Sluit foto menu' : 'Open foto menu' }}
         </b-button>
       </div>
     </section>
@@ -65,18 +65,18 @@
     <section v-if="addingPics">
       <div class="container">
         <form @submit="submitPictures">
-          <b-field label="Upload another picture">
+          <b-field label="Voeg een foto toe">
             <b-input type="file" accept="image/*" name="file"></b-input>
           </b-field>
-          <b-field label="Add a remark">
+          <b-field label="Schrijf een beschrijving van de foto">
             <b-input type="text" name="remark"></b-input>
           </b-field>
           <b-field class="is-grouped">
             <div class="control">
-              <button class="button is-link">Submit</button>
+              <button class="button is-link">Toevoegen</button>
             </div>
             <div class="control">
-              <button class="button is-link is-light">Cancel</button>
+              <button class="button is-link is-light">Annuleer</button>
             </div>
           </b-field>
         </form>
@@ -148,7 +148,7 @@ export default {
         if (this.requestsWithoutLocation.length > 0) {
           this.requestsWithoutLocation.forEach(({ job, item }) => {
             this.$buefy.snackbar.open({
-              message: `Updating item: ${item.name}`,
+              message: `item wijzigen: ${item.name}`,
               type: 'is-warning'
             })
             this[actionTypes.TRACK_ITEM]({
@@ -186,7 +186,7 @@ export default {
         if (!this.location) {
           this.$buefy.snackbar.open({
             message:
-              "Location isn't available yet. Item will be updated once it is.",
+              'Locatie van dit toestel is nog niet gekend. Het item word geupdated wanner de locatie beschikbaar is',
             type: 'is-info'
           })
           this.requestsWithoutLocation.push({
@@ -196,7 +196,7 @@ export default {
           return
         }
         this.$buefy.snackbar.open({
-          message: 'Location is available, updating immediatly',
+          message: 'Locatie is beschikbaar. Item word nu geupdated',
           type: 'is-info'
         })
         this[actionTypes.TRACK_ITEM]({

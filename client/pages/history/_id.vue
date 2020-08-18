@@ -21,7 +21,7 @@
         </div>
       </div>
       <div class="column is-12">
-        <h4 class="title is-4">History</h4>
+        <h4 class="title is-4">Geschiedenis</h4>
       </div>
       <template v-if="isUpdated">
         <div class="column is-12">
@@ -57,7 +57,7 @@
           <div class="card">
             <div class="card-content">
               <div class="content">
-                <p>This item hasn't been updated.</p>
+                <p>Dit item heeft nog geen updates gekregen.</p>
               </div>
             </div>
           </div>

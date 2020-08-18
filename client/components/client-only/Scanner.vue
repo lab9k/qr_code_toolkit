@@ -2,7 +2,7 @@
   <div>
     <qrcode-stream @decode="onDecode" @init="onInit">
       <div v-if="loading" class="loading-indicator">
-        Loading...
+        Laden...
       </div>
       <div v-if="error" class="error-indicator has-text-danger">
         {{ error }}
@@ -56,7 +56,7 @@ export default {
         this.$store.dispatch(actionTypes.FETCH_ITEM, id).then((item) => {
           if (item === undefined) {
             this.$buefy.toast.open({
-              message: `This Qr-code is not recognized, are you sure it's registered?`,
+              message: `Deze code is niet gekend. Ben je zeker dat ze geregistreerd is?`,
               type: 'is-danger'
             })
             return
