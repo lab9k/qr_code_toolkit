@@ -15,6 +15,14 @@
       </div>
 
       <div class="p-1">
+        <div class="field">
+          <b-switch v-model="onlyActiveJobsFilter">{{
+            onlyActiveJobsFilter ? 'Aleen actieve jobs' : 'Alle jobs'
+          }}</b-switch>
+        </div>
+      </div>
+
+      <div class="p-1">
         <div
           v-for="job in orderedJobs"
           :key="job.id"
@@ -53,27 +61,37 @@ export default {
       fullheight: true,
       fullwidth: false,
       right: false,
-      open: false
+      open: false,
+      onlyActiveJobsFilter: false
     }
   },
   computed: {
     ...mapState(['jobs']),
     orderedJobs() {
-      return [...this.jobs].sort(
-        ({ location: locationA }, { location: locationB }) => {
-          if (this.location) {
-            const [latA, lonA] = locationA.split(',')
-            const [latB, lonB] = locationB.split(',')
-            const [currLat, currLon] = this.location
-            return (
-              this.distanceBetween(currLat, currLon, latA, lonA) -
-              this.distanceBetween(currLat, currLon, latB, lonB)
-            )
-          } else {
-            return false
-          }
+      let j = this.jobs
+      if (process.client && this.onlyActiveJobsFilter) {
+        const activeJobs = JSON.parse(
+          localStorage.getItem('activeJobs') || '[]'
+        )
+        j = j.filter(
+          (e) =>
+            activeJobs.findIndex((ac) => ac.order_number === e.order_number) >=
+            0
+        )
+      }
+      return [...j].sort(({ location: locationA }, { location: locationB }) => {
+        if (this.location) {
+          const [latA, lonA] = locationA.split(',')
+          const [latB, lonB] = locationB.split(',')
+          const [currLat, currLon] = this.location
+          return (
+            this.distanceBetween(currLat, currLon, latA, lonA) -
+            this.distanceBetween(currLat, currLon, latB, lonB)
+          )
+        } else {
+          return false
         }
-      )
+      })
     }
   },
   methods: {

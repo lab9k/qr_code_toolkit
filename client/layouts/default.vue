@@ -16,6 +16,10 @@
             <b-icon icon="home" />
             <span>Alle jobs</span>
           </b-navbar-item>
+          <b-navbar-item :to="{ path: '/activate' }" tag="router-link">
+            <b-icon icon="ticket" />
+            <span>Activeer Jobs</span>
+          </b-navbar-item>
           <b-navbar-item :to="{ path: '/map' }" tag="router-link">
             <b-icon icon="map-marker" />
             <span>Map</span>
