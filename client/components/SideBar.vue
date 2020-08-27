@@ -17,7 +17,7 @@
       <div class="p-1">
         <div class="field">
           <b-switch v-model="onlyActiveJobsFilter">{{
-            onlyActiveJobsFilter ? 'Aleen actieve jobs' : 'Alle jobs'
+            'Aleen actieve jobs'
           }}</b-switch>
         </div>
       </div>
