@@ -79,9 +79,7 @@ export default {
         )
       }
       return [...j].sort(({ location: locationA }, { location: locationB }) => {
-        console.log(`sorting location from : ${this.location}`)
         if (this.location) {
-          console.log(`comparing: ${locationA} to ${locationB}`)
           const [latA, lonA] = locationA.split(',')
           const [latB, lonB] = locationB.split(',')
           const [currLat, currLon] = this.location
