@@ -31,8 +31,8 @@
           <div class="card-content">
             <div class="media">
               <div class="media-content">
-                <p class="title is-4">{{ job.name }}</p>
-                <p class="subtitle is-6">{{ job.address }}</p>
+                <p class="title is-4 title-no-overflow">{{ job.name }}</p>
+                <p class="subtitle is-6 title-no-overflow">{{ job.address }}</p>
               </div>
             </div>
             <div class="content">
@@ -111,5 +111,9 @@ export default {
 <style scoped>
 .p-1 {
   padding: 1em;
+}
+
+.title-no-overflow {
+  overflow-y: hidden;
 }
 </style>
