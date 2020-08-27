@@ -11,7 +11,10 @@ class ImageInline(admin.StackedInline):
 
 @admin.register(Job)
 class JobAdmin(admin.ModelAdmin):
-    list_display = ('name', 'current_items')
+    list_display = ('name', 'address', 'current_items',)
+    list_filter = (
+        ('address', admin.EmptyFieldListFilter),
+    )
     inlines = [ImageInline]
     readonly_fields = ['location']
 

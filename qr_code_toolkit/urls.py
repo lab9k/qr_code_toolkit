@@ -7,6 +7,11 @@ from django.contrib.auth import views as auth_views
 from jobqr.urls import router as oldRouter
 from roads_qr_kit.views import QrCodeView
 
+from django.contrib import admin
+
+admin.autodiscover()
+admin.site.enable_nav_sidebar = False
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include([
