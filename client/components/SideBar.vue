@@ -6,7 +6,6 @@
       :overlay="overlay"
       :right="right"
       :open.sync="open"
-      mobile="fullwidth"
       type="is-light"
     >
       <div class="p-1">
